@@ -1,0 +1,55 @@
+if: tag IS present
+
+matrix:
+  include:
+    - os: linux
+      language: generic
+      sudo: required
+      services:
+        - docker
+      env: DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
+    - os: osx
+      language: generic
+      env: MB_PYTHON_VERSION=3.5
+    - os: osx
+      language: generic
+      env: MB_PYTHON_VERSION=3.6
+    - os: osx
+      language: generic
+      env: MB_PYTHON_VERSION=3.7
+
+before_install: |
+  set -e
+  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    docker pull $DOCKER_IMAGE
+  elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    source multibuild/common_utils.sh
+    source multibuild/travis_steps.sh
+    before_install
+  fi
+
+
+install: |
+  # Output something every 10 minutes or Travis kills the job
+  while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
+  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/build-linux-wheels.sh
+  elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    export MYPY_USE_MYPYC=1
+    export MYPYC_OPT_LEVEL=3
+    export PYTHONPATH="$PWD/mypyc:$PYTHONPATH"
+    clean_code mypy HEAD
+    build_bdist_wheel mypy x86_64
+  fi
+  kill %1
+
+
+deploy:
+  provider: releases
+  api_key:
+    secure: nkJ7kXG3lFK4HGQkPJ36LVTGJ4WpYwqGS6xoaf4GBCuOdGPAdmCZYLJhsoN4GgI3sO7hz+DGfxvnQJyjn3uRBnIN+ofqzLsL+KPciae8PDwWan1E7wez41ZtroWUfsiFV9g8C8NThwSxkOUioX91VoZXZAgCa32+trCIXuayRjq9UMFPSaORNJTe8pg6unX8QGImx5//APtyJNGpTKpGoNomElMcWqjJ9aCIom+a8dQ/lJoCZn2u3+pbrlnvGvBup1UDrJZdTKznKXY7edVR4zIBo/smBwbTgqoTP2eohOw3EcPF430PvO9Q+3LvbM+8dAIKfbunH8x+yQZ+oTz5NOOQDeClN5Njmhh1KviCLm8mqnw1RnMF6Qz6GaSy9SKS+YhQRNAs/nvplUB91IyTxzZZf0IzehIcmECD3OIEp8U3WTsmTQppO/SQ0btk8on1uUZqy7QeIE9uxNOTXjRA5R1493CxRjk/sPmnkE5583arr8oJxG7pSXy7IstyXO7Ohh5gOmECZXcHS3DxtIRpi9+R05xFrgjPbg/YmPWdheCn7t6M/3bxXOXj34PWcVgLiAiC9Xch5yzIkvLsLrWU/ojd8ZjXfsVDANNlgDMK3LPv/nTyMoJWjkgr/WB9krVURiX82oUagjZg+iPc8tSG0PUTRVUdTa15xljz8nx87Ug=
+  file_glob: true
+  file: wheelhouse/*.whl
+  skip_cleanup: true
+  on:
+    tags: true

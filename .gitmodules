@@ -3,7 +3,7 @@
 	url = https://github.com/matthew-brett/multibuild
 [submodule "mypyc"]
 	path = mypyc
-	url = https://github.com/JukkaL/mypyc
+	url = https://github.com/mypyc/mypyc
 [submodule "mypy"]
 	path = mypy
 	url = https://github.com/python/mypy

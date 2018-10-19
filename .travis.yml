@@ -1,21 +1,31 @@
 if: tag IS present
 
+language: generic
+sudo: required
+
+env:
+  global:
+    - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
+
 matrix:
   include:
     - os: linux
-      language: generic
-      sudo: required
       services:
         - docker
-      env: DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
+      env: MB_PYTHON_VERSION=3.5
+    - os: linux
+      services:
+        - docker
+      env: MB_PYTHON_VERSION=3.6
+    - os: linux
+      services:
+        - docker
+      env: MB_PYTHON_VERSION=3.7
     - os: osx
-      language: generic
       env: MB_PYTHON_VERSION=3.5
     - os: osx
-      language: generic
       env: MB_PYTHON_VERSION=3.6
     - os: osx
-      language: generic
       env: MB_PYTHON_VERSION=3.7
 
 before_install: |
@@ -33,7 +43,7 @@ install: |
   # Output something every 10 minutes or Travis kills the job
   while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/build-linux-wheels.sh
+    docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/build-linux-wheels.sh $MB_PYTHON_VERSION
   elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     export MYPY_USE_MYPYC=1
     export MYPYC_OPT_LEVEL=3

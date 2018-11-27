@@ -16,3 +16,5 @@ PYTHONPATH=/io/mypyc CC=/opt/llvm/bin/clang MYPYC_OPT_LEVEL=3 "${PYBIN}/python3"
 for whl in dist/*.whl; do
     auditwheel repair "$whl" -w /io/wheelhouse/
 done
+
+./misc/test_installed_version.sh /io/wheelhouse/*.whl "${PYBIN}/python"

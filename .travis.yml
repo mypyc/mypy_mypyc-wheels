@@ -50,7 +50,7 @@ install: |
     export PYTHONPATH="$PWD/mypyc:$PYTHONPATH"
     clean_code mypy HEAD
     build_bdist_wheel mypy x86_64
-    cd mypy && ./misc/test_installed_version.sh ../wheelhouse/*.whl
+    (cd mypy && ./misc/test_installed_version.sh ../wheelhouse/*.whl)
   fi
   kill %1
 

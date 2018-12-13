@@ -54,6 +54,12 @@ install: |
   fi
   kill %1
 
+notifications:
+  email:
+    recipients:
+      - sully@msully.net
+    on_success: never # default: change
+    on_failure: always # default: always
 
 deploy:
   provider: releases

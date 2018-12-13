@@ -24,6 +24,7 @@ build: off
 
 test_script:
     - systeminfo
+    - wmic cpu get SocketDesignation, NumberOfCores, NumberOfLogicalProcessors /Format:List
     - "SET PYTHONPATH=%CD%\\mypyc"
     # distutils wants to use the 32-bit cross-compiler since 64-bit might not be
     # is present "lighter-weight installs". We arrange to always use the 64-bit

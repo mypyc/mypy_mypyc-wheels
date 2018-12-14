@@ -1,3 +1,5 @@
+skip_non_tags: true
+
 cache:
   - '%LOCALAPPDATA%\pip\Cache'
 

@@ -39,11 +39,12 @@ test_script:
 artifacts:
   # bdist_wheel puts your built wheel in the dist directory
 - path: mypy\dist\*
+  name: wheel
 
 deploy:
   - provider: GitHub
     release: $(appveyor_repo_tag_name)
-    artifact:  mypy\dist\*
+    artifact:  wheel
     auth_token:
         secure: rNWDrQcDx8+oeTCfEOIkX0YPw0wr41875VxA75VivfYu7e3fs9L3EXTXbbt5YCXb
     on:

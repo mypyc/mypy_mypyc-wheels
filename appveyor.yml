@@ -1,19 +1,20 @@
 cache:
   - '%LOCALAPPDATA%\pip\Cache'
 
-image: Visual Studio 2017
-
 environment:
   matrix:
     - PYTHON: "C:\\Python37-x64"
       PYTHON_VERSION: "3.7.x"
       PYTHON_ARCH: "64"
+      image: Visual Studio 2017
     - PYTHON: "C:\\Python36-x64"
       PYTHON_VERSION: "3.6.x"
       PYTHON_ARCH: "64"
+      image: Visual Studio 2015
     - PYTHON: "C:\\Python35-x64"
       PYTHON_VERSION: "3.5.x"
       PYTHON_ARCH: "64"
+      image: Visual Studio 2015
 
 install:
     - "git submodule update --init --recursive"
@@ -30,7 +31,11 @@ test_script:
     # is present "lighter-weight installs". We arrange to always use the 64-bit
     # version because the 32-bit linker runs out of memory linking mypy.
     - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-    - "SET PY_VCRUNTIME_REDIST=lololol"
+    # We set this because not doing the static linking seems to save a
+    # bunch of memory, which we need to pass on appveyor. We could specify a path
+    # and bundle a dll, but instead we build on matching versions of msvc and
+    # don't bother.
+    - "SET PY_VCRUNTIME_REDIST=not_a_valid_filename"
     - "SET DISTUTILS_USE_SDK=1"
     - "SET MYPYC_OPT_LEVEL=2"
     - "cd mypy"

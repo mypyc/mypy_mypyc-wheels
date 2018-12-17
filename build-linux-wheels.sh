@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
 # Unpack a modern clang version
-(cd / && curl -L https://github.com/msullivan/travis-testing/releases/download/llvm/llvm-centos-5.tar.gz | tar xzf -)
+(cd / && curl -L https://github.com/mypyc/mypy_mypyc-wheels/releases/download/llvm/llvm-centos-5.tar.gz | tar xzf -)
 
 cd /io/mypy
 

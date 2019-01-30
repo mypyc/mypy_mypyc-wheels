@@ -1,5 +1,5 @@
 function pre_build {
-    pip install -r mypy/test-requirements.txt
+    pip install -r mypyc-requirements.txt
 }
 
 function run_tests {

@@ -9,7 +9,7 @@ VER="${1//.}"
 PYBIN="/opt/python/cp${VER}-cp${VER}m/bin"
 
 # Compile wheels
-"${PYBIN}/pip3" install -r /io/mypyc/external/mypy/test-requirements.txt
+"${PYBIN}/pip3" install -r /io/mypy/test-requirements.txt
 PYTHONPATH=/io/mypyc CC=/opt/llvm/bin/clang MYPYC_OPT_LEVEL=3 "${PYBIN}/python3" setup.py --use-mypyc bdist_wheel
 
 # Bundle external shared libraries into the wheels

@@ -32,7 +32,7 @@ test_script:
     # version because the 32-bit linker runs out of memory linking mypy.
     - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
     - "SET DISTUTILS_USE_SDK=1"
-    - "SET MYPYC_OPT_LEVEL=2"
+    - "SET MYPYC_OPT_LEVEL=d"
     - "cd mypy"
     - "%PYTHON%\\python.exe setup.py --use-mypyc bdist_wheel"
     - "cd .."

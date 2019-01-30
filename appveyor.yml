@@ -20,7 +20,7 @@ environment:
 install:
     - "git submodule update --init --recursive"
     - "%PYTHON%\\python.exe -m pip install -U pip setuptools wheel virtualenv"
-    - "%PYTHON%\\python.exe -m pip install -r mypyc-requirements.txt"
+    - "%PYTHON%\\python.exe -m pip install -r mypy/mypyc-requirements.txt"
 
 build: off
 

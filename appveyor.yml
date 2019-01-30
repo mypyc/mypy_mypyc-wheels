@@ -19,15 +19,14 @@ environment:
 
 install:
     - "git submodule update --init --recursive"
-    - "%PYTHON%\\python.exe -m pip install -U pip setuptools wheel"
-    - "%PYTHON%\\python.exe -m pip install -U -r mypy/test-requirements.txt"
+    - "%PYTHON%\\python.exe -m pip install -U pip setuptools wheel virtualenv"
+    - "%PYTHON%\\python.exe -m pip install -r mypyc-requirements.txt"
 
 build: off
 
 test_script:
     - systeminfo
     - wmic cpu get SocketDesignation, NumberOfCores, NumberOfLogicalProcessors /Format:List
-    - "SET PYTHONPATH=%CD%\\mypyc"
     # distutils wants to use the 32-bit cross-compiler since 64-bit might not be
     # is present "lighter-weight installs". We arrange to always use the 64-bit
     # version because the 32-bit linker runs out of memory linking mypy.

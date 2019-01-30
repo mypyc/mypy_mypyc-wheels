@@ -8,13 +8,16 @@ cd /io/mypy
 VER="${1//.}"
 PYBIN="/opt/python/cp${VER}-cp${VER}m/bin"
 
+# Install mypyc
+"${PYBIN}/pip3" install -r /io/mypyc-requirements.txt
+
 # Compile wheels
-"${PYBIN}/pip3" install -r /io/mypy/test-requirements.txt
-PYTHONPATH=/io/mypyc CC=/opt/llvm/bin/clang MYPYC_OPT_LEVEL=3 "${PYBIN}/python3" setup.py --use-mypyc bdist_wheel
+CC=/opt/llvm/bin/clang MYPYC_OPT_LEVEL=3 "${PYBIN}/python3" setup.py --use-mypyc bdist_wheel
 
 # Bundle external shared libraries into the wheels
 for whl in dist/*.whl; do
     auditwheel repair "$whl" -w /io/wheelhouse/
 done
 
+"${PYBIN}/pip3" install virtualenv
 ./misc/test_installed_version.sh /io/wheelhouse/*.whl "${PYBIN}/python"

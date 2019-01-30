@@ -1,5 +1,6 @@
 function pre_build {
-    pip install -r mypy/test-requirements.txt
+    pip install virtualenv
+    pip install -r mypyc-requirements.txt
 }
 
 function run_tests {

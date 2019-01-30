@@ -3,13 +3,13 @@
 # Unpack a modern clang version
 (cd / && curl -L https://github.com/mypyc/mypy_mypyc-wheels/releases/download/llvm/llvm-centos-5.tar.gz | tar xzf -)
 
+cd /io/mypy
+
 VER="${1//.}"
 PYBIN="/opt/python/cp${VER}-cp${VER}m/bin"
 
 # Install mypyc
-"${PYBIN}/pip3" install -r mypyc-requirements.txt
-
-cd /io/mypy
+"${PYBIN}/pip3" install -r /io/mypyc-requirements.txt
 
 # Compile wheels
 CC=/opt/llvm/bin/clang MYPYC_OPT_LEVEL=0 "${PYBIN}/python3" setup.py --use-mypyc bdist_wheel

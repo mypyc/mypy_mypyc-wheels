@@ -19,4 +19,5 @@ for whl in dist/*.whl; do
     auditwheel repair "$whl" -w /io/wheelhouse/
 done
 
+"${PYBIN}/pip3" install virtualenv
 ./misc/test_installed_version.sh /io/wheelhouse/*.whl "${PYBIN}/python"

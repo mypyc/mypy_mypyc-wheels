@@ -46,7 +46,7 @@ install: |
     docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/build-linux-wheels.sh $MB_PYTHON_VERSION
   elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     export MYPY_USE_MYPYC=1
-    export MYPYC_OPT_LEVEL=0
+    export MYPYC_OPT_LEVEL=1
     clean_code mypy HEAD
     build_bdist_wheel mypy x86_64
     (cd mypy && ./misc/test_installed_version.sh ../wheelhouse/*.whl)

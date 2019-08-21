@@ -9,7 +9,7 @@ VER="${1//.}"
 PYBIN="/opt/python/cp${VER}-cp${VER}m/bin"
 
 # Install mypyc
-"${PYBIN}/pip3" install -r mypyc-requirements.txt
+"${PYBIN}/pip3" install -r mypy-requirements.txt
 
 # Compile wheels
 CC=/opt/llvm/bin/clang MYPYC_OPT_LEVEL=3 "${PYBIN}/python3" setup.py --use-mypyc bdist_wheel

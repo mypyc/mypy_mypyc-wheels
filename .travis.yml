@@ -53,7 +53,7 @@ install: |
     # (cd mypy && ./misc/test_installed_version.sh ../wheelhouse/*.whl)
   fi
   jobs
-  kill %1
+  kill $bg_pid
 
 notifications:
   email:

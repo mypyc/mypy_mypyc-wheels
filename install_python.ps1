@@ -1,3 +1,7 @@
+# This comes from the multibuild project (https://github.com/matthew-brett/multibuild)
+# which is Copyright (c) 2013-2019, Matt Terry and Matthew Brett; all rights reserved.
+# and distributed under a 2-clause BSD license.
+
 # Install specified Python version.
 # Install only if:
 #    Our current matrix entry uses this Python version AND
@@ -10,7 +14,6 @@ if ( [System.IO.File]::Exists($py_exe) ) {
 $req_nodot = $env:PYTHON -replace '\D+Python(\d+(?:rc\d+)?)(?:-x64)?','$1'
 $req_ver = $req_nodot -replace '(\d)(\d+)','$1.$2.0'
 $req_dir = $req_nodot -replace '(\d)(\d+)(.*)','$1.$2.0'
-Write-Host "ASDF {$req_nodot} ${req_ver} ${req_dir} from $env:PYTHON"
 
 if ($env:PYTHON -eq "C:\Python${req_nodot}-x64") {
     $exe_suffix="-amd64"

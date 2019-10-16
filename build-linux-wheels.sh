@@ -6,7 +6,11 @@
 cd /io/mypy
 
 VER="${1//.}"
-PYBIN="/opt/python/cp${VER}-cp${VER}m/bin"
+TAG="m"
+if [[ $VER -ge 38 ]]; then
+    TAG=""
+fi
+PYBIN="/opt/python/cp${VER}-cp${VER}${TAG}/bin"
 
 # Install mypyc
 "${PYBIN}/pip3" install -r mypy-requirements.txt

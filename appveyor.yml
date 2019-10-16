@@ -7,18 +7,22 @@ image: Visual Studio 2017
 
 environment:
   matrix:
-    - PYTHON: "C:\\Python37-x64"
+    - PYTHON: "C:\Python38-x64"
+      PYTHON_VERSION: "3.8.x"
+      PYTHON_ARCH: "64"
+    - PYTHON: "C:\Python37-x64"
       PYTHON_VERSION: "3.7.x"
       PYTHON_ARCH: "64"
-    - PYTHON: "C:\\Python36-x64"
+    - PYTHON: "C:\Python36-x64"
       PYTHON_VERSION: "3.6.x"
       PYTHON_ARCH: "64"
-    - PYTHON: "C:\\Python35-x64"
+    - PYTHON: "C:\Python35-x64"
       PYTHON_VERSION: "3.5.x"
       PYTHON_ARCH: "64"
 
 install:
     - "git submodule update --init --recursive"
+    - ps: .\multibuild\install_python.ps1
     - "%PYTHON%\\python.exe -m pip install -U pip setuptools wheel virtualenv"
     - "%PYTHON%\\python.exe -m pip install -r mypy/mypy-requirements.txt"
 

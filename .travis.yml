@@ -21,12 +21,21 @@ matrix:
       services:
         - docker
       env: MB_PYTHON_VERSION=3.7
+    - os: linux
+      services:
+        - docker
+      env: MB_PYTHON_VERSION=3.8
     - os: osx
       env: MB_PYTHON_VERSION=3.5
     - os: osx
       env: MB_PYTHON_VERSION=3.6
     - os: osx
       env: MB_PYTHON_VERSION=3.7
+    - os: osx
+      env:
+        - MB_PYTHON_VERSION=3.8
+        - MB_PYTHON_OSX_VER=10.9
+        - MB_ML_VER=2010
 
 before_install: |
   set -e

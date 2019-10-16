@@ -7,6 +7,9 @@ image: Visual Studio 2017
 
 environment:
   matrix:
+    - PYTHON: "C:\\Python38-x64"
+      PYTHON_VERSION: "3.8.x"
+      PYTHON_ARCH: "64"
     - PYTHON: "C:\\Python37-x64"
       PYTHON_VERSION: "3.7.x"
       PYTHON_ARCH: "64"
@@ -19,6 +22,7 @@ environment:
 
 install:
     - "git submodule update --init --recursive"
+    - ps: .\install_python.ps1
     - "%PYTHON%\\python.exe -m pip install -U pip setuptools wheel virtualenv"
     - "%PYTHON%\\python.exe -m pip install -r mypy/mypy-requirements.txt"
 
@@ -28,7 +32,7 @@ test_script:
     - systeminfo
     - wmic cpu get SocketDesignation, NumberOfCores, NumberOfLogicalProcessors /Format:List
     # distutils wants to use the 32-bit cross-compiler since 64-bit might not be
-    # is present "lighter-weight installs". We arrange to always use the 64-bit
+    # present in "lighter-weight installs". We arrange to always use the 64-bit
     # version because the 32-bit linker runs out of memory linking mypy.
     - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
     - "SET DISTUTILS_USE_SDK=1"

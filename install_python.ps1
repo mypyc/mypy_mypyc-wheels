@@ -7,7 +7,7 @@ $py_exe = "${env:PYTHON}\Python.exe"
 if ( [System.IO.File]::Exists($py_exe) ) {
     exit 0
 }
-$req_nodot = $env:PYTHON -replace '\D+Python(\d+(?:rc\d+))(?:-x64)?','$1'
+$req_nodot = $env:PYTHON -replace '\D+Python(\d+(?:rc\d+)?)(?:-x64)?','$1'
 $req_ver = $req_nodot -replace '(\d)(\d+)','$1.$2.0'
 $req_dir = $req_nodot -replace '(\d)(\d+)(.*)','$1.$2.0'
 Write-Host "ASDF {$req_nodot} ${req_ver} ${req_dir} from $env:PYTHON"

@@ -51,7 +51,7 @@ deploy:
     release: $(appveyor_repo_tag_name)
     artifact:  wheel
     auth_token:
-        secure: rNWDrQcDx8+oeTCfEOIkX0YPw0wr41875VxA75VivfYu7e3fs9L3EXTXbbt5YCXb
+        secure: HxdZ/lve6qtJz8ihQLU5hUzK/IK86UbRQ5oa17WTP8MXYlXugQCaYA3MlI7yf3N0
     on:
      appveyor_repo_tag: true       # deploy on tag push only
 

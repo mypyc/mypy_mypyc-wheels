@@ -2,66 +2,87 @@ if: tag IS present
 
 language: generic
 sudo: required
+services: docker
+dist: bionic
 
 env:
-  global:
-    - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
 
 matrix:
   include:
     - os: linux
-      services:
-        - docker
-      env: MB_PYTHON_VERSION=3.5
+      env:
+        - MB_PYTHON_VERSION=3.5
+        - DOCKER_TEST_IMAGE=multibuild/xenial_{PLAT}
     - os: linux
-      services:
-        - docker
-      env: MB_PYTHON_VERSION=3.6
+      env:
+        - MB_PYTHON_VERSION=3.6
+        - DOCKER_TEST_IMAGE=multibuild/xenial_{PLAT}
     - os: linux
-      services:
-        - docker
-      env: MB_PYTHON_VERSION=3.7
+      env:
+        - MB_PYTHON_VERSION=3.7
+        - DOCKER_TEST_IMAGE=multibuild/xenial_{PLAT}
     - os: linux
-      services:
-        - docker
-      env: MB_PYTHON_VERSION=3.8
+      env:
+        - MB_PYTHON_VERSION=3.8
+        - DOCKER_TEST_IMAGE=multibuild/xenial_{PLAT}
+
     - os: osx
-      env: MB_PYTHON_VERSION=3.5
+      env:
+        - MB_PYTHON_VERSION=3.5
     - os: osx
-      env: MB_PYTHON_VERSION=3.6
+      env:
+        - MB_PYTHON_VERSION=3.6
     - os: osx
-      env: MB_PYTHON_VERSION=3.7
+      env:
+        - MB_PYTHON_VERSION=3.7
     - os: osx
       env:
         - MB_PYTHON_VERSION=3.8
         - MB_PYTHON_OSX_VER=10.9
         - MB_ML_VER=2010
 
+    - os: linux
+      arch: arm64
+      env:
+        - PLAT=aarch64
+        - MB_ML_VER=2014
+        - MB_PYTHON_VERSION=3.6
+        - DOCKER_TEST_IMAGE=multibuild/xenial_{PLAT}
+
+    - os: linux
+      arch: arm64
+      env:
+        - PLAT=aarch64
+        - MB_ML_VER=2014
+        - MB_PYTHON_VERSION=3.7
+        - DOCKER_TEST_IMAGE=multibuild/xenial_{PLAT}
+
+    - os: linux
+      arch: arm64
+      env:
+        - PLAT=aarch64
+        - MB_ML_VER=2014
+        - MB_PYTHON_VERSION=3.8
+        - DOCKER_TEST_IMAGE=multibuild/xenial_{PLAT}
+
 before_install: |
   set -e
-  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    docker pull $DOCKER_IMAGE
-  elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    source multibuild/common_utils.sh
-    source multibuild/travis_steps.sh
-    before_install
-  fi
+  source multibuild/common_utils.sh
+  source multibuild/travis_steps.sh
+  before_install
 
 
 install: |
   # Output something every 10 minutes or Travis kills the job
   while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
   bg_pid=$!
-  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/build-linux-wheels.sh $MB_PYTHON_VERSION
-  elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    export MYPY_USE_MYPYC=1
-    export MYPYC_OPT_LEVEL=3
-    clean_code mypy HEAD
-    build_bdist_wheel mypy x86_64
-    (cd mypy && ./misc/test_installed_version.sh ../wheelhouse/*.whl)
-  fi
+  clean_code mypy HEAD
+  # Uses env_vars.sh inside the docker when building
+  build_bdist_wheel $REPO_DIR $PLAT
   kill $bg_pid
+
+script:
+    - install_run $PLAT
 
 notifications:
   email:

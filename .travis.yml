@@ -26,11 +26,17 @@ matrix:
         - docker
       env: MB_PYTHON_VERSION=3.8
     - os: osx
-      env: MB_PYTHON_VERSION=3.5
+      env:
+        - MB_PYTHON_VERSION=3.5
+        - PLAT=x86_64
     - os: osx
-      env: MB_PYTHON_VERSION=3.6
+      env:
+        - MB_PYTHON_VERSION=3.6
+        - PLAT=x86_64
     - os: osx
-      env: MB_PYTHON_VERSION=3.7
+      env:
+        - MB_PYTHON_VERSION=3.7
+        - PLAT=x86_64
     - os: osx
       env:
         - MB_PYTHON_VERSION=3.8
@@ -57,6 +63,7 @@ install: |
   elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     export MYPY_USE_MYPYC=1
     export MYPYC_OPT_LEVEL=3
+    # Note: The following functions are defined by multibuild
     clean_code mypy HEAD
     build_bdist_wheel mypy x86_64
     (cd mypy && ./misc/test_installed_version.sh ../wheelhouse/*.whl)

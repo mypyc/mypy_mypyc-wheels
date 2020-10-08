@@ -1,0 +1,60 @@
+name: Build wheels
+
+on: [push, pull_request]
+
+jobs:
+  build_wheels:
+    name: py${{ matrix.python-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # cibuildwheel builds linux wheels inside a manylinux container
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: [35, 36, 37, 38, 39]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        name: Install Python
+        with:
+          python-version: "3.7"
+      - name: Install cibuildwheel
+        run: |
+          python -m pip install cibuildwheel==1.6.1
+      - name: Checkout mypy
+        shell: bash
+        # use a commit hash checked into a file to get the mypy revision to build
+        # submodules prove problematic since .git is outside cibuildwheel's manylinux container
+        run: |
+          COMMIT=$(cat mypy_commit)
+          git clone --recurse-submodules https://github.com/python/mypy.git
+          cd mypy
+          git checkout --force --recurse-submodules $COMMIT
+      - name: Build wheels
+        env:
+          CIBW_BUILD: "cp${{ matrix.python-version }}-*"
+          CIBW_SKIP: "*-manylinux_i686"
+          CIBW_BUILD_VERBOSITY: 1
+
+          # mypy's isolated builds don't specify the requirements mypyc needs, so install
+          # requirements and don't use isolated builds
+          CIBW_BEFORE_BUILD: pip install -r {package}/mypy-requirements.txt
+          # download a copy of clang to use to compile on linux. this was probably built in 2018,
+          # speeds up compilation 2x
+          CIBW_BEFORE_BUILD_LINUX: (cd / && curl -L https://github.com/mypyc/mypy_mypyc-wheels/releases/download/llvm/llvm-centos-5.tar.gz | tar xzf -) && pip install -r {package}/mypy-requirements.txt
+
+          # the double negative is counterintuitive, https://github.com/pypa/pip/issues/5735
+          CIBW_ENVIRONMENT: "MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=3 PIP_NO_BUILD_ISOLATION=no"
+          CIBW_ENVIRONMENT_LINUX: "CC=/opt/llvm/bin/clang MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=3 PIP_NO_BUILD_ISOLATION=no"
+
+          CIBW_BEFORE_TEST: pip install -r {project}/mypy/test-requirements.txt
+          CIBW_TEST_COMMAND: pytest {project}/mypy/mypy/test
+          # i ran into some flaky test on windows, so only run testcheck. it looks like we
+          # previously didn't run any tests on windows wheels, so this is a net win.
+          CIBW_TEST_COMMAND_WINDOWS: pytest {project}/mypy/mypy/test/testcheck.py
+        run: |
+          python -m cibuildwheel --output-dir wheelhouse mypy
+      - uses: actions/upload-artifact@v2
+        with:
+          path: ./wheelhouse/*.whl

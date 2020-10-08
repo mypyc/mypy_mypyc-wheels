@@ -58,3 +58,29 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           path: ./wheelhouse/*.whl
+  build_sdist_python_wheel:
+    name: sdist and python wheel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        name: Install Python
+        with:
+          python-version: "3.7"
+      - name: Checkout mypy
+        shell: bash
+        run: |
+          COMMIT=$(cat mypy_commit)
+          git clone --recurse-submodules https://github.com/python/mypy.git
+          cd mypy
+          git checkout --force --recurse-submodules $COMMIT
+      - name: Build sdist and wheel
+        run: |
+          cd mypy
+          pip install --upgrade setuptools pip wheel
+          python setup.py sdist bdist_wheel
+      - uses: actions/upload-artifact@v2
+        with:
+          path: |
+            mypy/dist/*.whl
+            mypy/dist/*.tar.gz

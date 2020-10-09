@@ -113,8 +113,6 @@ jobs:
   release:
     name: create release
     needs: [build_wheels, build_sdist_python_wheel]
-    # TODO: remove once py39 succeeds
-    if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact

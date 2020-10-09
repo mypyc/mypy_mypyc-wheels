@@ -1,0 +1,155 @@
+name: Build wheels
+
+on: [push, pull_request]
+
+jobs:
+  build_wheels:
+    name: py${{ matrix.python-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # cibuildwheel builds linux wheels inside a manylinux container
+        # it also takes care of procuring the correct python version for us
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: [35, 36, 37, 38, 39]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        name: Install Python
+        with:
+          python-version: "3.7"
+      - name: Install cibuildwheel
+        run: |
+          python -m pip install cibuildwheel==1.6
+      - name: Checkout mypy
+        shell: bash
+        # use a commit hash checked into a file to get the mypy revision to build.
+        # submodules prove problematic since .git is outside cibuildwheel's manylinux container
+        run: |
+          COMMIT=$(cat mypy_commit)
+          git clone --recurse-submodules https://github.com/python/mypy.git
+          cd mypy
+          git checkout --force --recurse-submodules $COMMIT
+      - name: Build wheels
+        env:
+          CIBW_BUILD: "cp${{ matrix.python-version }}-*"
+          CIBW_SKIP: "*-manylinux_i686 *-win32"
+          CIBW_BUILD_VERBOSITY: 1
+
+          # mypy's isolated builds don't specify the requirements mypyc needs, so install
+          # requirements and don't use isolated builds
+          CIBW_BEFORE_BUILD: >
+            pip install -r {package}/mypy-requirements.txt
+          # download a copy of clang to use to compile on linux. this was probably built in 2018,
+          # speeds up compilation 2x
+          CIBW_BEFORE_BUILD_LINUX: >
+            (cd / && curl -L https://github.com/mypyc/mypy_mypyc-wheels/releases/download/llvm/llvm-centos-5.tar.gz | tar xzf -) &&
+            pip install -r {package}/mypy-requirements.txt
+
+          # the double negative is counterintuitive, https://github.com/pypa/pip/issues/5735
+          CIBW_ENVIRONMENT: >
+            MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=3 PIP_NO_BUILD_ISOLATION=no
+          CIBW_ENVIRONMENT_LINUX: >
+            MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=3 PIP_NO_BUILD_ISOLATION=no
+            CC=/opt/llvm/bin/clang
+
+          # lxml is slow to build wheels for new releases, so allow installing reqs to fail
+          # if we failed to install lxml, we'll skip tests, but allow the build to succeed
+          CIBW_BEFORE_TEST: pip install -r {project}/mypy/test-requirements.txt || true
+          # pytest looks for configuration files in the parent directories of where the tests live.
+          # since we are trying to run the tests from their installed location, we copy those into
+          # the venv. Ew ew ew.
+          CIBW_TEST_COMMAND: >
+            ( ! pip list | grep lxml ) || (
+            DIR=$(python -c 'import mypy; from os.path import dirname; print(dirname(dirname(mypy.__path__[0])))')
+            && cp '{project}/mypy/pytest.ini' '{project}/mypy/conftest.py' $DIR
+            && MYPY_TEST_PREFIX='{project}/mypy' pytest $(python -c 'import mypy.test; print(mypy.test.__path__[0])')
+            )
+          # i ran into some flaky tests on windows, so only run testcheck. it looks like we
+          # previously didn't run any tests on windows wheels, so this is a net win.
+          CIBW_TEST_COMMAND_WINDOWS: >
+            bash -c "
+            ( ! pip list | grep lxml ) || (
+            DIR=$(python -c 'import mypy; from os.path import dirname; print(dirname(dirname(mypy.__path__[0])))')
+            && cp '{project}/mypy/pytest.ini' '{project}/mypy/conftest.py' $DIR
+            && MYPY_TEST_PREFIX='{project}/mypy' pytest $(python -c 'import mypy.test; print(mypy.test.__path__[0])')/testcheck.py
+            )
+            "
+        run: |
+          python -m cibuildwheel --output-dir wheelhouse mypy
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: ./wheelhouse/*.whl
+  build_sdist_python_wheel:
+    name: sdist and python wheel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        name: Install Python
+        with:
+          python-version: "3.7"
+      - name: Checkout mypy
+        shell: bash
+        run: |
+          COMMIT=$(cat mypy_commit)
+          git clone --recurse-submodules https://github.com/python/mypy.git
+          cd mypy
+          git checkout --force --recurse-submodules $COMMIT
+      - name: Build sdist and wheel
+        run: |
+          cd mypy
+          pip install --upgrade setuptools pip wheel
+          python setup.py sdist bdist_wheel
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: |
+            mypy/dist/*.whl
+            mypy/dist/*.tar.gz
+  release:
+    name: create release
+    needs: [build_wheels, build_sdist_python_wheel]
+    # TODO: remove once py39 succeeds
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - name: Release
+        # https://github.com/actions/upload-release-asset/issues/47
+        uses: actions/github-script@v2
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const fs = require('fs').promises;
+            const { repo: { owner, repo }, sha } = context;
+
+            console.log('environment', process.versions);
+            console.log({ owner, repo, sha });
+
+            const release = await github.repos.createRelease({
+              owner, repo,
+              // if GITHUB_REF just appears to be a branch, use tag-{commit} as the tag
+              tag_name: process.env.GITHUB_REF.includes("refs/heads/") ? "tag-" + sha : process.env.GITHUB_REF,
+              target_commitish: sha
+            });
+
+            console.log('created release', { release });
+
+            for (let file of await fs.readdir('dist')) {
+              console.log('uploading', file);
+
+              await github.repos.uploadReleaseAsset({
+                owner, repo,
+                release_id: release.data.id,
+                name: file,
+                data: await fs.readFile(`./dist/${file}`)
+              });
+            }

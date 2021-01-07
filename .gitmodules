@@ -1,6 +1,0 @@
-[submodule "multibuild"]
-	path = multibuild
-	url = https://github.com/matthew-brett/multibuild
-[submodule "mypy"]
-	path = mypy
-	url = https://github.com/python/mypy

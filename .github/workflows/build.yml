@@ -99,6 +99,11 @@ jobs:
           git clone --recurse-submodules https://github.com/python/mypy.git
           cd mypy
           git checkout --force --recurse-submodules $COMMIT
+      - name: Run check-manifest
+        run: |
+          cd mypy
+          pip install check-manifest
+          check-manifest -v
       - name: Build sdist and wheel
         run: |
           cd mypy

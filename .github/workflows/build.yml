@@ -135,7 +135,7 @@ jobs:
             const release = await github.repos.createRelease({
               owner, repo,
               // if GITHUB_REF just appears to be a branch, use tag-{commit} as the tag
-              tag_name: process.env.GITHUB_REF.includes("refs/heads/") ? "tag-" + sha : process.env.GITHUB_REF,
+              tag_name: process.env.GITHUB_REF.includes("refs/heads/") ? "tag-" + sha : process.env.GITHUB_REF.split("/").pop(),
               target_commitish: sha
             });
 

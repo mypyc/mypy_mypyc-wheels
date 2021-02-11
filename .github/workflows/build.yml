@@ -40,14 +40,20 @@ jobs:
           CIBW_BUILD_VERBOSITY: 1
 
           # mypy's isolated builds don't specify the requirements mypyc needs, so install
-          # requirements and don't use isolated builds
+          # requirements and don't use isolated builds. we need to use build-requirements.txt
+          # with recent mypy commits to get stub packages needed for compilation.
+          #
+          # TODO: remove use of mypy-requirements.txt once we no longer need to support
+          #       building pre modular typeshed releases
           CIBW_BEFORE_BUILD: >
-            pip install -r {package}/mypy-requirements.txt
+            pip install -r {package}/mypy-requirements.txt &&
+            (pip install -r {package}/build-requirements.txt || true)
           # download a copy of clang to use to compile on linux. this was probably built in 2018,
           # speeds up compilation 2x
           CIBW_BEFORE_BUILD_LINUX: >
             (cd / && curl -L https://github.com/mypyc/mypy_mypyc-wheels/releases/download/llvm/llvm-centos-5.tar.gz | tar xzf -) &&
-            pip install -r {package}/mypy-requirements.txt
+            pip install -r {package}/mypy-requirements.txt &&
+            (pip install -r {package}/build-requirements.txt || true)
 
           # the double negative is counterintuitive, https://github.com/pypa/pip/issues/5735
           CIBW_ENVIRONMENT: >

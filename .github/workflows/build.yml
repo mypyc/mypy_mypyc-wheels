@@ -97,9 +97,10 @@ jobs:
         shell: bash
         run: |
           COMMIT=$(cat mypy_commit)
-          git clone --recurse-submodules https://github.com/python/mypy.git
+          git clone https://github.com/python/mypy.git
           cd mypy
-          git checkout --force --recurse-submodules $COMMIT
+          git checkout $COMMIT
+          git submodule update --init --recursive
       - name: Run check-manifest
         run: |
           cd mypy

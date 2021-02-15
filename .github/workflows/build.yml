@@ -61,6 +61,8 @@ jobs:
           CIBW_ENVIRONMENT_LINUX: >
             MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=3 PIP_NO_BUILD_ISOLATION=no
             CC=/opt/llvm/bin/clang
+          CIBW_ENVIRONMENT_WINDOWS: >
+            MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=2 PIP_NO_BUILD_ISOLATION=no
 
           # lxml is slow to build wheels for new releases, so allow installing reqs to fail
           # if we failed to install lxml, we'll skip tests, but allow the build to succeed

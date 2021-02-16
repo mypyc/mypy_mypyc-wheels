@@ -35,7 +35,7 @@ jobs:
           git submodule update --init --recursive
       - name: Build wheels
         run: |
-          python mypy/misc/build_wheel.py --output-dir wheelhouse
+          python mypy/misc/build_wheel.py --output-dir wheelhouse --python-version ${{ matrix.python-version}}
       - uses: actions/upload-artifact@v2
         with:
           name: dist

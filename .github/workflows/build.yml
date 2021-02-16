@@ -34,60 +34,8 @@ jobs:
           git checkout $COMMIT
           git submodule update --init --recursive
       - name: Build wheels
-        env:
-          CIBW_BUILD: "cp${{ matrix.python-version }}-*"
-          CIBW_SKIP: "*-manylinux_i686 *-win32"
-          CIBW_BUILD_VERBOSITY: 1
-
-          # mypy's isolated builds don't specify the requirements mypyc needs, so install
-          # requirements and don't use isolated builds. we need to use build-requirements.txt
-          # with recent mypy commits to get stub packages needed for compilation.
-          #
-          # TODO: remove use of mypy-requirements.txt once we no longer need to support
-          #       building pre modular typeshed releases
-          CIBW_BEFORE_BUILD: >
-            pip install -r {package}/mypy-requirements.txt &&
-            (pip install -r {package}/build-requirements.txt || true)
-          # download a copy of clang to use to compile on linux. this was probably built in 2018,
-          # speeds up compilation 2x
-          CIBW_BEFORE_BUILD_LINUX: >
-            (cd / && curl -L https://github.com/mypyc/mypy_mypyc-wheels/releases/download/llvm/llvm-centos-5.tar.gz | tar xzf -) &&
-            pip install -r {package}/mypy-requirements.txt &&
-            (pip install -r {package}/build-requirements.txt || true)
-
-          # the double negative is counterintuitive, https://github.com/pypa/pip/issues/5735
-          CIBW_ENVIRONMENT: >
-            MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=3 PIP_NO_BUILD_ISOLATION=no
-          CIBW_ENVIRONMENT_LINUX: >
-            MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=3 PIP_NO_BUILD_ISOLATION=no
-            CC=/opt/llvm/bin/clang
-          CIBW_ENVIRONMENT_WINDOWS: >
-            MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=2 PIP_NO_BUILD_ISOLATION=no
-
-          # lxml is slow to build wheels for new releases, so allow installing reqs to fail
-          # if we failed to install lxml, we'll skip tests, but allow the build to succeed
-          CIBW_BEFORE_TEST: pip install -r {project}/mypy/test-requirements.txt || true
-          # pytest looks for configuration files in the parent directories of where the tests live.
-          # since we are trying to run the tests from their installed location, we copy those into
-          # the venv. Ew ew ew.
-          CIBW_TEST_COMMAND: >
-            ( ! pip list | grep lxml ) || (
-            DIR=$(python -c 'import mypy; from os.path import dirname; print(dirname(dirname(mypy.__path__[0])))')
-            && cp '{project}/mypy/pytest.ini' '{project}/mypy/conftest.py' $DIR
-            && MYPY_TEST_PREFIX='{project}/mypy' pytest $(python -c 'import mypy.test; print(mypy.test.__path__[0])')
-            )
-          # i ran into some flaky tests on windows, so only run testcheck. it looks like we
-          # previously didn't run any tests on windows wheels, so this is a net win.
-          CIBW_TEST_COMMAND_WINDOWS: >
-            bash -c "
-            ( ! pip list | grep lxml ) || (
-            DIR=$(python -c 'import mypy; from os.path import dirname; print(dirname(dirname(mypy.__path__[0])))')
-            && cp '{project}/mypy/pytest.ini' '{project}/mypy/conftest.py' $DIR
-            && MYPY_TEST_PREFIX='{project}/mypy' pytest $(python -c 'import mypy.test; print(mypy.test.__path__[0])')/testcheck.py
-            )
-            "
         run: |
-          python -m cibuildwheel --output-dir wheelhouse mypy
+          python mypy/misc/build_wheel.py --output-dir wheelhouse
       - uses: actions/upload-artifact@v2
         with:
           name: dist

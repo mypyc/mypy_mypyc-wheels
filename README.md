@@ -16,7 +16,7 @@ https://github.com/mypyc/mypy_mypyc-wheels/actions
 
 You can use pip to install these wheels like so:
 ```
-pip install --find-links https://github.com/mypyc/mypy_mypyc-wheels/releases/tag/v0.920+dev.48181d26e7575aece8cab61eb866ac6c573dfd76 mypy
+pip install --upgrade --find-links https://github.com/mypyc/mypy_mypyc-wheels/releases/tag/v0.920+dev.48181d26e7575aece8cab61eb866ac6c573dfd76 mypy
 # or possibly
-pip install --find-links https://github.com/mypyc/mypy_mypyc-wheels/releases/latest mypy
+pip install --upgrade --find-links https://github.com/mypyc/mypy_mypyc-wheels/releases/latest mypy
 ```

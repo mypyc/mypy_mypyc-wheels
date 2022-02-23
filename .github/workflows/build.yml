@@ -22,7 +22,7 @@ jobs:
           python-version: "3.7"
       - name: Install cibuildwheel
         run: |
-          python -m pip install "cibuildwheel==2.3.1
+          python -m pip install "cibuildwheel==2.3.1"
       - name: Checkout mypy
         shell: bash
         # use a commit hash checked into a file to get the mypy revision to build.

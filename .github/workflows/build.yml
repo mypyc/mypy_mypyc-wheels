@@ -15,8 +15,8 @@ jobs:
         python-version: [36, 37, 38, 39, 310]
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         name: Install Python
         with:
           python-version: "3.7"
@@ -36,7 +36,7 @@ jobs:
       - name: Build wheels
         run: |
           python mypy/misc/build_wheel.py --output-dir wheelhouse --python-version ${{ matrix.python-version}}
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: dist
           path: ./wheelhouse/*.whl
@@ -44,8 +44,8 @@ jobs:
     name: sdist and python wheel
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         name: Install Python
         with:
           python-version: "3.7"
@@ -67,7 +67,7 @@ jobs:
           cd mypy
           pip install --upgrade setuptools pip wheel
           python setup.py sdist bdist_wheel
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: dist
           path: |
@@ -79,13 +79,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: dist
           path: dist
       - name: Release
         # https://github.com/actions/upload-release-asset/issues/47
-        uses: actions/github-script@v2
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
@@ -95,7 +95,7 @@ jobs:
             console.log('environment', process.versions);
             console.log({ owner, repo, sha });
 
-            const release = await github.repos.createRelease({
+            const release = await github.rest.repos.createRelease({
               owner, repo,
               // if GITHUB_REF just appears to be a branch, use tag-{commit} as the tag
               tag_name: process.env.GITHUB_REF.includes("refs/heads/") ? "tag-" + sha : process.env.GITHUB_REF.split("/").pop(),
@@ -107,7 +107,7 @@ jobs:
             for (let file of await fs.readdir('dist')) {
               console.log('uploading', file);
 
-              await github.repos.uploadReleaseAsset({
+              await github.rest.repos.uploadReleaseAsset({
                 owner, repo,
                 release_id: release.data.id,
                 name: file,

@@ -84,6 +84,7 @@ jobs:
           name: dist
           path: dist
       - name: Release
+        if: ${{ github.event_name != 'pull_request' }}
         # https://github.com/actions/upload-release-asset/issues/47
         uses: actions/github-script@v6
         with:

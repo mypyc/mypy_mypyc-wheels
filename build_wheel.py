@@ -43,11 +43,6 @@ def create_environ(python_version: str) -> Dict[str, str]:
 
     env["CIBW_BUILD_VERBOSITY"] = "1"
 
-    # mypy's isolated builds don't specify the requirements mypyc needs, so install
-    # requirements and don't use isolated builds. we need to use build-requirements.txt
-    # with recent mypy commits to get stub packages needed for compilation.
-    env["CIBW_BEFORE_BUILD"] = "pip install -r {package}/build-requirements.txt"
-
     # install clang using available package manager. platform-specific configuration overrides is only possible with
     # pyproject.toml. once project fully transitions, properly adjust cibuildwheel configuration to each platform.
     # https://cibuildwheel.readthedocs.io/en/stable/options/#overrides
@@ -55,19 +50,18 @@ def create_environ(python_version: str) -> Dict[str, str]:
         "CIBW_BEFORE_ALL_LINUX"
     ] = "command -v yum && yum install -y llvm-toolset-7.0 || apk add --no-cache clang"
 
-    # the double negative is counterintuitive, https://github.com/pypa/pip/issues/5735
     # add llvm paths to environment to eliminate scl usage (like manylinux image does for gcc toolset).
     # specifying redhat paths for musllinux shouldn't harm but is not desired (see overrides-related comment above).
-    env["CIBW_ENVIRONMENT"] = "MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=3 PIP_NO_BUILD_ISOLATION=no"
+    env["CIBW_ENVIRONMENT"] = "MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=3"
     env["CIBW_ENVIRONMENT_LINUX"] = (
-        "MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=3 PIP_NO_BUILD_ISOLATION=no "
+        "MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=3 "
         + "PATH=$PATH:/opt/rh/llvm-toolset-7.0/root/usr/bin "
         + "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rh/llvm-toolset-7.0/root/usr/lib64 "
         + "CC=clang"
     )
     env[
         "CIBW_ENVIRONMENT_WINDOWS"
-    ] = "MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=2 PIP_NO_BUILD_ISOLATION=no"
+    ] = "MYPY_USE_MYPYC=1 MYPYC_OPT_LEVEL=2"
 
     # lxml doesn't have a wheel for Python 3.10 on the manylinux image we use.
     # lxml has historically been slow to support new Pythons as well.

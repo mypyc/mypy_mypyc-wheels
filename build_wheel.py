@@ -48,7 +48,7 @@ def create_environ(python_version: str) -> Dict[str, str]:
     # https://cibuildwheel.readthedocs.io/en/stable/options/#overrides
     env[
         "CIBW_BEFORE_ALL_LINUX"
-    ] = "command -v yum && yum install -y llvm-toolset-7.0 || apk add --no-cache clang"
+    ] = "command -v yum && ( yum install -y llvm-toolset-7.0 || yum -v install -y llvm-toolset-7.0 ) || apk add --no-cache clang"
 
     # add llvm paths to environment to eliminate scl usage (like manylinux image does for gcc toolset).
     # specifying redhat paths for musllinux shouldn't harm but is not desired (see overrides-related comment above).

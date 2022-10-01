@@ -138,7 +138,8 @@ def run_pyodide_build(output_dir: str, mypy_root_dir: str, environ: dict[str, st
     # 2. build the wheel
     # 3. copy the results into output_dir
     dist_dir = os.path.join(mypy_root_dir, "dist")
-    shutil.rmtree(dist_dir)
+    if os.path.isdir(dist_dir):
+        shutil.rmtree(dist_dir)
     script = f"python -m pyodide_build --exports pyinit {mypy_root_dir}"
     subprocess.check_call(script, shell=True, cwd=mypy_root_dir, env=environ)
     wheels = glob.glob(f"{dist_dir}/mypy-*.whl")

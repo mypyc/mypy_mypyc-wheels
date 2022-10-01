@@ -18,14 +18,15 @@ You can test locally by using --extra-opts. macOS example:
 
   python build_wheel.py --mypy-root-dir ~/dev/mypy --python-version 39 --output-dir out --extra-opts="--platform macos"
 """
-
+from __future__ import annotations
 import argparse
 import os
+import shutil
 import subprocess
-from typing import Dict
+import glob
 
 
-def create_environ(python_version: str) -> Dict[str, str]:
+def create_cibuildwheel_environ(python_version: str) -> dict[str, str]:
     """Set up environment variables for cibuildwheel."""
     env = os.environ.copy()
 
@@ -121,6 +122,27 @@ def create_environ(python_version: str) -> Dict[str, str]:
     )
     return env
 
+def run_cibuildwheel(extra_opts: str, output_dir: str, mypy_root_dir: str, environ: dict[str, str]) -> None:
+    script = f"python -m cibuildwheel {extra_opts} --output-dir {output_dir} {mypy_root_dir}"
+    subprocess.check_call(script, shell=True, env=environ)
+
+def create_pyodide_build_environ(python_version: str) -> dict[str, str]:
+    env = {}
+    env["MYPY_USE_MYPYC"] = "1"
+    env["MYPYC_OPT_LEVEL"] = "3"
+    return env
+
+def run_pyodide_build(output_dir: str, mypy_root_dir: str, environ: dict[str, str]) -> None:
+    # pyodide build doesn't seem to support setting an output directory so we manually:
+    # 1. remove dist directory in mypy source tree just in case.
+    # 2. build the wheel
+    # 3. copy the results into output_dir
+    dist_dir = os.path.join(mypy_root_dir, "dist")
+    shutil.rmtree(dist_dir)
+    script = f"python -m pyodide_build --exports pyinit {mypy_root_dir}"
+    subprocess.check_call(script, shell=True, cwd=mypy_root_dir, env=environ)
+    wheels = glob.glob(f"{dist_dir}/mypy-*.whl")
+    shutil.copyfile(wheels[0], output_dir)
 
 def main() -> None:
     parser = argparse.ArgumentParser()
@@ -144,9 +166,10 @@ def main() -> None:
     python_version = args.python_version
     output_dir = args.output_dir
     extra_opts = args.extra_opts
-    environ = create_environ(python_version)
-    script = f"python -m cibuildwheel {extra_opts} --output-dir {output_dir} {mypy_root_dir}"
-    subprocess.check_call(script, shell=True, env=environ)
+    cibuildwheel_environ = create_cibuildwheel_environ(python_version)
+    run_cibuildwheel(extra_opts, output_dir, mypy_root_dir, cibuildwheel_environ)
+    pyodide_build_environ = create_pyodide_build_environ(python_version)
+    run_pyodide_build(output_dir, mypy_root_dir, pyodide_build_environ)
 
 
 if __name__ == "__main__":

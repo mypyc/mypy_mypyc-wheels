@@ -140,7 +140,7 @@ def run_pyodide_build(output_dir: str, mypy_root_dir: str, environ: dict[str, st
     dist_dir = os.path.join(mypy_root_dir, "dist")
     if os.path.isdir(dist_dir):
         shutil.rmtree(dist_dir)
-    script = f"python -m pyodide_build --exports pyinit {mypy_root_dir}"
+    script = f"python3.10 -m pyodide_build --exports pyinit {mypy_root_dir}"
     subprocess.check_call(script, shell=True, cwd=mypy_root_dir, env=environ)
     wheels = glob.glob(f"{dist_dir}/mypy-*.whl")
     shutil.copyfile(wheels[0], output_dir)
@@ -169,8 +169,9 @@ def main() -> None:
     extra_opts = args.extra_opts
     cibuildwheel_environ = create_cibuildwheel_environ(python_version)
     run_cibuildwheel(extra_opts, output_dir, mypy_root_dir, cibuildwheel_environ)
-    pyodide_build_environ = create_pyodide_build_environ(python_version)
-    run_pyodide_build(output_dir, mypy_root_dir, pyodide_build_environ)
+    if python_version == "310":
+        pyodide_build_environ = create_pyodide_build_environ(python_version)
+        run_pyodide_build(output_dir, mypy_root_dir, pyodide_build_environ)
 
 
 if __name__ == "__main__":

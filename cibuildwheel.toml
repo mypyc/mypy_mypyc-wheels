@@ -39,11 +39,18 @@ windows.before-test = [
 # the venv. Ew ew ew.
 # We don't run external mypyc tests since there's some issue with compilation on the
 # manylinux image we use.
-test-command = [
-  "DIR=$(python -c 'import mypy, os; dn = os.path.dirname; print(dn(dn(mypy.__path__[0])))') cp '{project}/mypy/pytest.ini' '{project}/mypy/conftest.py' $DIR",
-  "MYPY_TEST_DIR=$(python -c 'import mypy.test; print(mypy.test.__path__[0])') MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPY_TEST_DIR",
-  "MYPYC_TEST_DIR=$(python -c 'import mypyc.test; print(mypyc.test.__path__[0])') MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPYC_TEST_DIR -k 'not test_external'",
-]
+test-command = """ \
+  ( \
+     DIR=$(python -c 'import mypy, os; dn = os.path.dirname; print(dn(dn(mypy.__path__[0])))') \
+     && cp '{project}/mypy/pytest.ini' '{project}/mypy/conftest.py' $DIR \
+\
+     && MYPY_TEST_DIR=$(python -c 'import mypy.test; print(mypy.test.__path__[0])') \
+     && MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPY_TEST_DIR \
+\
+     && MYPYC_TEST_DIR=$(python -c 'import mypyc.test; print(mypyc.test.__path__[0])') \
+     && MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPYC_TEST_DIR -k 'not test_external' \
+   )
+"""
 
 # i ran into some flaky tests on windows, so only run testcheck. it looks like we
 # previously didn't run any tests on windows wheels, so this is a net win.

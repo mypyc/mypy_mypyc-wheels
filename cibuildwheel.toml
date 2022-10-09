@@ -20,17 +20,7 @@ linux.before-all = [
   "yum install -y llvm-toolset-7.0 || yum -v install -y llvm-toolset-7.0",
 ]
 
-# lxml doesn't have a wheel for Python 3.10 on the manylinux image we use.
-# lxml has historically been slow to support new Pythons as well.
 before-test = [
-  "grep -v lxml {project}/mypy/test-requirements.txt > /tmp/test-requirements.txt",
-  "cp {project}/mypy/mypy-requirements.txt /tmp/mypy-requirements.txt",
-  "cp {project}/mypy/build-requirements.txt /tmp/build-requirements.txt",
-  "pip install -r /tmp/test-requirements.txt",
-]
-
-# lxml currently has wheels on Windows and doesn't have grep, so special case
-windows.before-test = [
   "pip install -r {project}/mypy/test-requirements.txt",
 ]
 
@@ -52,7 +42,7 @@ test-command = """ \
    )
 """
 
-# i ran into some flaky tests on windows, so only run testcheck. it looks like we
+# I ran into some flaky tests on windows, so only run testcheck. it looks like we
 # previously didn't run any tests on windows wheels, so this is a net win.
 windows.test-command = """ \
   bash -c "( \
@@ -67,16 +57,16 @@ windows.test-command = """ \
 
 [tool.cibuildwheel.environment]
 MYPY_USE_MYPYC = "1"
-MYPYC_OPT_LELVEL = "3"
+MYPYC_OPT_LEVEL = "3"
 
 [tool.cibuildwheel.windows.environment]
 MYPY_USE_MYPYC = "1"
-MYPYC_OPT_LELVEL = "2"
+MYPYC_OPT_LEVEL = "2"
 
 [tool.cibuildwheel.linux.environment]
 # Add llvm paths to environment to eliminate scl usage (like manylinux image does for gcc toolset).
 MYPY_USE_MYPYC = "1"
-MYPYC_OPT_LELVEL = "3"
+MYPYC_OPT_LEVEL = "3"
 PATH="$PATH:/opt/rh/llvm-toolset-7.0/root/usr/bin"
 LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/rh/llvm-toolset-7.0/root/usr/lib64"
 CC="clang"
@@ -87,5 +77,5 @@ select = "*musllinux*"
 before-all = [
   "apk add --no-cache clang",
 ]
-environment = { MYPY_USE_MYPYC="1", MYPYC_OPT_LELVEL="3" }
+environment = { MYPY_USE_MYPYC="1", MYPYC_OPT_LEVEL="3" }
 

@@ -108,7 +108,7 @@ jobs:
           pyodide build --exports pyinit
       - name: Install pyodide for WASM test
         run: |
-          npm install "pyodide==0.21.3"
+          npm install pyodide@0.21.3
       - name: Run WASM smoke test
         run: |
           node wasm_test.js

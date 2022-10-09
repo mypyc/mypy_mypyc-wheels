@@ -102,7 +102,7 @@ jobs:
           MYPYC_OPT_LEVEL: "3"
         run: |
           cd mypy
-          python -m pyodide-build --exports pyinit
+          python -m pyodide_build --exports pyinit
       - name: Install pyodide for WASM test
         run: |
           npm install "pyodide==0.21.3"

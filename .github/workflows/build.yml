@@ -82,9 +82,6 @@ jobs:
         name: Install Python
         with:
           python-version: "3.10"
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.5.0 # pyodide tests with this version
       - name: Setup emsdk
         uses: mymindstorm/setup-emsdk@v11
         with:

@@ -77,5 +77,5 @@ select = "*musllinux*"
 before-all = [
   "apk add --no-cache clang",
 ]
-environment = { MYPY_USE_MYPYC="1", MYPYC_OPT_LEVEL="3" }
+environment = { MYPY_USE_MYPYC="1", MYPYC_OPT_LEVEL="3", CC="clang" }
 

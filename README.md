@@ -20,3 +20,19 @@ pip install --upgrade --find-links https://github.com/mypyc/mypy_mypyc-wheels/re
 # or possibly
 pip install --upgrade --find-links https://github.com/mypyc/mypy_mypyc-wheels/releases/latest mypy
 ```
+
+##  Building locally
+
+With [pipx](https://pipx.pypa.io) installed, run:
+
+```bash
+COMMIT=$(cat mypy_commit)
+git clone https://github.com/python/mypy.git --recurse-submodules
+(cd mypy && git checkout $COMMIT)
+pipx run cibuildwheel --config=cibuildwheel.toml mypy
+```
+
+Optionally add `--only=<identifier>` to build only one wheel, or set
+`CIBW_BUILD` to some expression like `cp311-*` and include `--platform linux`
+(or some other platform). Optionally pin cibuildwheel to the version specified
+in `.github/workflows/build.yml`.

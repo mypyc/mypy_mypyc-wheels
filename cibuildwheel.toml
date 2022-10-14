@@ -1,5 +1,7 @@
 [tool.cibuildwheel]
 
+build-frontend = "build"
+
 # Don't build 32-bit wheels
 skip = [
   "*-manylinux_i686",

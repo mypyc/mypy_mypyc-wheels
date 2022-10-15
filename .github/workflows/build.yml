@@ -112,7 +112,7 @@ jobs:
           MYPYC_OPT_LEVEL: "3"
           # Required for emcc to find emscripten correctly
           EM_CONFIG: ${{ steps.install_emsdk.outputs.EM_CONFIG }}
-          CC: ${{ format("{}/upstream/emscripten/emcc", steps.install_emsdk.outputs.EM_CONFIG) }}
+          CC: ${{ format('{0}/upstream/emscripten/emcc', steps.install_emsdk.outputs.EM_CONFIG) }}
         run: |
           cd mypy
           pyodide build --exports pyinit

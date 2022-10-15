@@ -82,12 +82,19 @@ jobs:
         name: Install Python
         with:
           python-version: "3.10"
-      - name: Setup emsdk
-        uses: mymindstorm/setup-emsdk@v11
+      - uses: actions/setup-node@v3
         with:
+          node-version: 18.5.0 # pyodide tests with this version
+      - name: Install emscripten
+        id: install_emsdk
+        run: |
+          git clone https://github.com/emscripten-core/emsdk.git
+          cd emsdk
           # Version of Emscripten pyodide 0.21.0 uses.
-          version: 3.1.14
-          actions-cache-folder: 'emsdk-cache'
+          ./emsdk install 3.1.14
+          ./emsdk activate 3.1.14
+          # We need the location of emscripten when we use pyodide-build
+          echo "EM_CONFIG=$(pwd)/.emscripten" >> $GITHUB_OUTPUT
       - name: Checkout mypy
         shell: bash
         run: |
@@ -103,6 +110,9 @@ jobs:
         env:
           MYPY_USE_MYPYC: "1"
           MYPYC_OPT_LEVEL: "3"
+          # Required for emcc to find emscripten correctly
+          EM_CONFIG: ${{ steps.install_emsdk.outputs.EM_CONFIG }}
+          CC: ${{ format("{}/upstream/emscripten/emcc", steps.install_emsdk.outputs.EM_CONFIG) }}
         run: |
           cd mypy
           pyodide build --exports pyinit

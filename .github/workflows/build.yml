@@ -94,7 +94,7 @@ jobs:
           ./emsdk install 3.1.14
           ./emsdk activate 3.1.14
           # We need the location of emscripten when we use pyodide-build
-          echo "EM_CONFIG=$(pwd)/.emscripten" >> $GITHUB_OUTPUT
+          echo "EMSCRIPTEN_DIR=$(pwd)" >> $GITHUB_OUTPUT
       - name: Checkout mypy
         shell: bash
         run: |
@@ -110,13 +110,10 @@ jobs:
         env:
           MYPY_USE_MYPYC: "1"
           MYPYC_OPT_LEVEL: "3"
-          # Required for emcc to find emscripten correctly
-          EM_CONFIG: ${{ steps.install_emsdk.outputs.EM_CONFIG }}
-          EMSCRIPTEN_DIR: ${{ format('{0}/upstream/emscripten', steps.install_emsdk.outputs.EM_CONFIG) }}
+          EMSCRIPTEN_DIR: ${{ steps.install_emsdk.outputs.EMSCRIPTEN_DIR }}
         run: |
           cd mypy
-          # Set so we can find emcc correctly
-          echo "PATH=$EMSCRIPTEN_DIR:$PATH" >> $GITHUB_ENV
+          source $EMSCRIPTEN_DIR/emsdk_env.sh
           pyodide build --exports pyinit
       - name: Install pyodide for WASM test
         run: |

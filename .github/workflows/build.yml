@@ -112,9 +112,11 @@ jobs:
           MYPYC_OPT_LEVEL: "3"
           # Required for emcc to find emscripten correctly
           EM_CONFIG: ${{ steps.install_emsdk.outputs.EM_CONFIG }}
-          CC: ${{ format('{0}/upstream/emscripten/emcc', steps.install_emsdk.outputs.EM_CONFIG) }}
+          EMSCRIPTEN_DIR: ${{ format('{0}/upstream/emscripten', steps.install_emsdk.outputs.EM_CONFIG) }}
         run: |
           cd mypy
+          # Set so we can find emcc correctly
+          echo "PATH=$EMSCRIPTEN_DIR:$PATH" >> $GITHUB_ENV
           pyodide build --exports pyinit
       - name: Install pyodide for WASM test
         run: |

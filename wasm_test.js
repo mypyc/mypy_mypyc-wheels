@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require("path");
 
 
-const EXPECTED_ERROR = `test.py:1: error: Unsupported operand types for + ("int" and "str")
+const EXPECTED_ERROR = `test.py:1: error: Unsupported operand types for + ("int" and "str")  [operator]
 Found 1 error in 1 file (checked 1 source file)
 `
 

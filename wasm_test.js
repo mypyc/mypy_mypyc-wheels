@@ -33,9 +33,10 @@ async function test_mypy() {
 }
 
 
-function assert(value, message) {
-    if (!value) {
+function assert(value, expected, message) {
+    if (value != expected) {
         console.log(message);
+        console.log(value);
         process.exit(1);
     }
 }
@@ -43,8 +44,8 @@ function assert(value, message) {
 
 test_mypy().then((result) => {
   let [stdout, stderr, code] = result.toJs();
-  assert(code === 1, "Exit code wasn't 1");
-  assert(stderr === "", "Stderr not empty");
-  assert(stdout === EXPECTED_ERROR, "Stdout not the expected value");
+  assert(code, 1, "Exit code wasn't 1");
+  assert(stderr, "", "Stderr not empty");
+  assert(stdout, EXPECTED_ERROR, "Stdout not the expected value");
   console.log("Success! Tests passed as expected.");
 });

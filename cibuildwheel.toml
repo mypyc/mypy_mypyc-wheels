@@ -56,28 +56,26 @@ windows.test-command = """ \
   )"
 """
 
+[tool.cibuildwheel.config-settings]
+--build-option = "--use-mypyc"
 
 [tool.cibuildwheel.environment]
-MYPY_USE_MYPYC = "1"
 MYPYC_OPT_LEVEL = "3"
 
 [tool.cibuildwheel.windows.environment]
-MYPY_USE_MYPYC = "1"
 MYPYC_OPT_LEVEL = "2"
 
 [tool.cibuildwheel.linux.environment]
 # Add llvm paths to environment to eliminate scl usage (like manylinux image does for gcc toolset).
-MYPY_USE_MYPYC = "1"
 MYPYC_OPT_LEVEL = "3"
 PATH="$PATH:/opt/rh/llvm-toolset-7.0/root/usr/bin"
 LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/rh/llvm-toolset-7.0/root/usr/lib64"
 CC="clang"
-
 
 [[tool.cibuildwheel.overrides]]
 select = "*musllinux*"
 before-all = [
   "apk add --no-cache clang",
 ]
-environment = { MYPY_USE_MYPYC="1", MYPYC_OPT_LEVEL="3", CC="clang" }
+environment = { MYPYC_OPT_LEVEL="3", CC="clang" }
 

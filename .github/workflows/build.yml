@@ -68,8 +68,8 @@ jobs:
       - name: Build sdist and wheel
         run: |
           cd mypy
-          pip install --upgrade setuptools pip wheel
-          python setup.py sdist bdist_wheel
+          pip install --upgrade setuptools build
+          python -m build
       - uses: actions/upload-artifact@v3
         with:
           name: dist

@@ -15,10 +15,17 @@ If wheels aren't getting built, debug over at
 https://github.com/mypyc/mypy_mypyc-wheels/actions
 
 You can use pip to install these wheels like so:
+```bash
+pip install --upgrade --find-links https://github.com/mypyc/mypy_mypyc-wheels/releases/ mypy
+# If you need a specific version, specify the url as follows
+pip install --upgrade --find-links https://github.com/mypyc/mypy_mypyc-wheels/releases/expanded_assets/v0.990+dev.4ccfca162184ddbc9139f7a3abd72ce7139a2ec3 mypy
 ```
-pip install --upgrade --find-links https://github.com/mypyc/mypy_mypyc-wheels/releases/tag/v0.920+dev.48181d26e7575aece8cab61eb866ac6c573dfd76 mypy
-# or possibly
-pip install --upgrade --find-links https://github.com/mypyc/mypy_mypyc-wheels/releases/latest mypy
+
+Unfortunately, these options may not work, and could instead install a source dist or the wrong version.
+In this case you will need to manually select the wheel you wish to install: navigate to the release page and copy
+the url of the correct wheel.
+```bash
+pip install https://github.com/mypyc/mypy_mypyc-wheels/releases/download/v0.990%2Bdev.4ccfca162184ddbc9139f7a3abd72ce7139a2ec3/mypy-0.990+dev.4ccfca162184ddbc9139f7a3abd72ce7139a2ec3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
 ```
 
 ##  Building locally

@@ -16,9 +16,9 @@ https://github.com/mypyc/mypy_mypyc-wheels/actions
 
 You can use pip to install these wheels like so:
 ```bash
-pip install --upgrade --find-links https://github.com/mypyc/mypy_mypyc-wheels/releases mypy
+pip install --upgrade --find-links https://github.com/KotlinIsland/mypy_mypyc-wheels/releases basedmypy
 # or if you need a specific version
-pip install --upgrade --find-links https://github.com/mypyc/mypy_mypyc-wheels/releases mypy==0.990+dev.4ccfca162184ddbc9139f7a3abd72ce7139a2ec3
+pip install --upgrade --find-links https://github.com/KotlinIsland/mypy_mypyc-wheels/releases basedmypy==1.6.0+dev.8e2443a74c9fb1726dc2c730b5e469881d3c1acf
 ```
 
 ##  Building locally

@@ -21,19 +21,19 @@ jobs:
         run: |
           git clone https://github.com/python/mypy.git --recurse-submodules
           git -C mypy checkout $(cat mypy_commit)
-      - name: Install cibuildwheel
-        run: pipx install cibuildwheel==2.11.1
+      - name: Install cibuildwheel and pypyp
+        run: pipx install cibuildwheel==2.11.1 pypyp==1
       - id: set-matrix
         run: |
           MATRIX=$(
             {
               cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform linux mypy \
-              | jq -Rc '{"only": inputs, "os": "ubuntu-latest"}' \
+              | pyp 'json.dumps({"only": x, "os": "ubuntu-latest"})' \
               && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform macos mypy \
-              | jq -Rc '{"only": inputs, "os": "macos-latest"}' \
+              | pyp 'json.dumps({"only": x, "os": "macos-latest"})' \
               && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform windows mypy \
-              | jq -Rc '{"only": inputs, "os": "windows-latest"}'
-            } | jq -sc
+              | pyp 'json.dumps({"only": x, "os": "windows-latest"})'
+            } | pyp 'json.dumps(list(map(json.loads, lines)))'
           )
           echo "include=$MATRIX" | tee -a $GITHUB_OUTPUT
         env:

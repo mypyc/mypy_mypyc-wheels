@@ -78,7 +78,6 @@ CC="clang"
 [[tool.cibuildwheel.overrides]]
 select = "*musllinux*"
 before-all = [
-  "apk add --no-cache clang",
+  "apk add --no-cache clang && curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y",
 ]
-environment = { MYPYC_OPT_LEVEL="3", MYPYC_DEBUG_LEVEL="0", CC="clang" }
-
+environment = { MYPYC_OPT_LEVEL="3", MYPYC_DEBUG_LEVEL="0", CC="clang", PATH="$PATH:$HOME/.cargo/bin" }

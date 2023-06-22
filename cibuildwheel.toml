@@ -81,7 +81,10 @@ before-all = [
   "apk add --no-cache clang",
 ]
 before-test = [
-  "sed -i -e '/ruff/d' {project}/mypy/test-requirements.txt",
-  "pip install -r {project}/mypy/test-requirements.txt",
+  "cd {project}/mypy",
+  "sed -i -e '/ruff/d' test-requirements.txt",
+  "git update-index --assume-unchanged test-requirements.txt",
+  "pip install -r test-requirements.txt",
+  "cd ..",
 ]
 environment = { MYPYC_OPT_LEVEL="3", MYPYC_DEBUG_LEVEL="0", CC="clang" }

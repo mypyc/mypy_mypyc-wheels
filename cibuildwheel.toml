@@ -22,9 +22,10 @@ linux.before-all = [
   "yum install -y llvm-toolset-7.0 || yum -v install -y llvm-toolset-7.0",
 ]
 
-before-test = [
-  "pip install -r {project}/mypy/test-requirements.txt",
-]
+before-test = """ \
+  sed -i '/ruff/d' {project}/mypy/test-requirements.txt' \
+  && pip install -r {project}/mypy/test-requirements.txt
+"""
 
 # pytest looks for configuration files in the parent directories of where the tests live.
 # since we are trying to run the tests from their installed location, we copy those into
@@ -81,4 +82,3 @@ before-all = [
   "apk add --no-cache clang",
 ]
 environment = { MYPYC_OPT_LEVEL="3", MYPYC_DEBUG_LEVEL="0", CC="clang" }
-

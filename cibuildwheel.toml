@@ -80,5 +80,12 @@ select = "*musllinux*"
 before-all = [
   "apk add --no-cache clang",
 ]
+# Remove ruff from test requirements. Wheels are only provided for musllinux_1_2,
+# not musllinux_1_1. Building from source would require rust.
+# Ruff is only used for linting, safe to skip for tests.
+before-test = [
+  "sed -i -e '/ruff/d' {project}/mypy/test-requirements.txt",
+  "git -C {project}/mypy update-index --assume-unchanged test-requirements.txt",
+  "pip install -r {project}/mypy/test-requirements.txt",
+]
 environment = { MYPYC_OPT_LEVEL="3", MYPYC_DEBUG_LEVEL="0", CC="clang" }
-

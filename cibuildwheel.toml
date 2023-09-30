@@ -37,10 +37,9 @@ test-command = """ \
      && cp '{project}/mypy/pyproject.toml' '{project}/mypy/conftest.py' $DIR \
 \
      && MYPY_TEST_DIR=$(python -c 'import mypy.test; print(mypy.test.__path__[0])') \
-     && MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPY_TEST_DIR \
-\
      && MYPYC_TEST_DIR=$(python -c 'import mypyc.test; print(mypyc.test.__path__[0])') \
-     && MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPYC_TEST_DIR -k 'not test_external' \
+\
+     && MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPY_TEST_DIR $MYPYC_TEST_DIR -k 'not test_external' \
    )
 """
 

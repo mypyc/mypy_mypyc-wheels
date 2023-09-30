@@ -82,6 +82,7 @@ jobs:
         name: Install Python
         with:
           python-version: "3.9"
+          cache: 'pip'
       - name: Checkout mypy
         shell: bash
         run: |
@@ -115,6 +116,7 @@ jobs:
         name: Install Python
         with:
           python-version: "3.10"
+          cache: 'pip'
       - uses: actions/setup-node@v3
         with:
           node-version: 18.5.0 # pyodide tests with this version

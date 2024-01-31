@@ -23,7 +23,7 @@ jobs:
           git -C mypy checkout $(cat mypy_commit)
       - name: Install cibuildwheel and pypyp
         run: |
-          pipx install cibuildwheel==2.16.2
+          pipx install cibuildwheel==2.16.5
           pipx install pypyp==1
       - id: set-matrix
         run: |
@@ -32,7 +32,7 @@ jobs:
               cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform linux mypy \
               | pyp 'json.dumps({"only": x, "os": "ubuntu-latest"})' \
               && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform macos mypy \
-              | pyp 'json.dumps({"only": x, "os": "macos-latest"})' \
+              | pyp 'json.dumps({"only": x, "os": "macos-14"})' \
               && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform windows mypy \
               | pyp 'json.dumps({"only": x, "os": "windows-latest"})'
             } | pyp 'json.dumps(list(map(json.loads, lines)))'
@@ -62,7 +62,7 @@ jobs:
           git clone https://github.com/python/mypy.git --recurse-submodules
           git -C mypy checkout $(cat mypy_commit)
 
-      - uses: pypa/cibuildwheel@v2.16.2
+      - uses: pypa/cibuildwheel@v2.16.5
         with:
           config-file: cibuildwheel.toml
           package-dir: mypy

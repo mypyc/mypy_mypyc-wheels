@@ -68,10 +68,11 @@ jobs:
           package-dir: mypy
           only: ${{ matrix.only }}
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: dist
+          name: dist-${{ matrix.only }}
           path: ./wheelhouse/*.whl
+          overwrite: true
 
   build_sdist_python_wheel:
     name: sdist and python wheel
@@ -100,12 +101,14 @@ jobs:
           cd mypy
           pip install --upgrade setuptools build
           python -m build
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: dist
+          name: dist-sdist_python_wheel
           path: |
             mypy/dist/*.whl
             mypy/dist/*.tar.gz
+          overwrite: true
+
   build_wasm_wheel:
     name: WASM wheel for 3.10
     runs-on: ubuntu-latest
@@ -154,21 +157,24 @@ jobs:
       - name: Run WASM smoke test
         run: |
           node wasm_test.js
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: dist
+          name: dist-wasm_wheel
           path: |
             mypy/dist/*.whl
+          overwrite: true
+
   release:
     name: create release
-    needs: [build_wheels, build_sdist_python_wheel]
+    needs: [build_wheels, build_sdist_python_wheel, build_wasm_wheel]
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          name: dist
+          pattern: dist-*
           path: dist
+          merge-multiple: true
       - name: Release
         if: ${{ github.event_name != 'pull_request' }}
         # https://github.com/actions/upload-release-asset/issues/47

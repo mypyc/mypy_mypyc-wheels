@@ -79,7 +79,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         name: Install Python
         with:
           python-version: "3.9"
@@ -114,11 +114,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         name: Install Python
         with:
           python-version: "3.10"
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.5.0 # pyodide tests with this version
       - name: Install emscripten
@@ -178,7 +178,7 @@ jobs:
       - name: Release
         if: ${{ github.event_name != 'pull_request' }}
         # https://github.com/actions/upload-release-asset/issues/47
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |

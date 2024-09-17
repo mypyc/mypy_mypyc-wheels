@@ -20,7 +20,6 @@ test-skip = "cp38-macosx_arm64"
 build-verbosity = 1
 
 linux.before-all = [
-  "git config --global --add safe.directory {project}/mypy",
   "yum install -y llvm-toolset || yum -v install -y llvm-toolset",
 ]
 
@@ -79,7 +78,6 @@ CC="clang"
 [[tool.cibuildwheel.overrides]]
 select = "*musllinux*"
 before-all = [
-  "git config --global --add safe.directory {project}/mypy",
   "apk add --no-cache clang",
 ]
 # Remove ruff from test requirements. Wheels are only provided for musllinux_1_2,

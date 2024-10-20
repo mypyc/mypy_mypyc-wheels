@@ -2,7 +2,9 @@
 
 build-frontend = "build"
 linux.manylinux-x86_64-image = "manylinux_2_28"
+linux.manylinux-aarch64-image = "manylinux_2_28"
 linux.musllinux-x86_64-image = "musllinux_1_1"  # Change to musllinux_1_2 at some point
+linux.musllinux-aarch64-image = "musllinux_1_1"  # Change to musllinux_1_2 at some point
 
 # Don't build 32-bit wheels or PyPy
 skip = [

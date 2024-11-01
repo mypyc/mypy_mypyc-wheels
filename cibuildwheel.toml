@@ -3,8 +3,8 @@
 build-frontend = "build"
 linux.manylinux-x86_64-image = "manylinux_2_28"
 linux.manylinux-aarch64-image = "manylinux_2_28"
-linux.musllinux-x86_64-image = "musllinux_1_1"  # Change to musllinux_1_2 at some point
-linux.musllinux-aarch64-image = "musllinux_1_1"  # Change to musllinux_1_2 at some point
+linux.musllinux-x86_64-image = "musllinux_1_2"
+linux.musllinux-aarch64-image = "musllinux_1_2"
 
 # Don't build 32-bit wheels or PyPy
 skip = [
@@ -80,12 +80,7 @@ select = "*musllinux*"
 before-all = [
   "apk add --no-cache clang",
 ]
-# Remove ruff from test requirements. Wheels are only provided for musllinux_1_2,
-# not musllinux_1_1. Building from source would require rust.
-# Ruff is only used for linting, safe to skip for tests.
 before-test = [
-  "sed -i -e '/ruff/d' {project}/mypy/test-requirements.txt",
-  "git -C {project}/mypy update-index --assume-unchanged test-requirements.txt",
   "pip install -r {project}/mypy/test-requirements.txt",
 ]
 environment = { MYPYC_OPT_LEVEL="3", MYPYC_DEBUG_LEVEL="0", CC="clang" }

@@ -6,12 +6,13 @@ linux.manylinux-aarch64-image = "manylinux_2_28"
 linux.musllinux-x86_64-image = "musllinux_1_2"
 linux.musllinux-aarch64-image = "musllinux_1_2"
 
-# Don't build 32-bit wheels or PyPy
+# Don't build 32-bit wheels / PyPy / musllinux arm64
 skip = [
   "*-manylinux_i686",
   "*-musllinux_i686",
   "*-win32",
   "pp*",
+  "*-musllinux_aarch64",
 ]
 
 # Python 3.8 can't be tested on macOS arm64
@@ -84,3 +85,17 @@ before-test = [
   "pip install -r {project}/mypy/test-requirements.txt",
 ]
 environment = { MYPYC_OPT_LEVEL="3", MYPYC_DEBUG_LEVEL="0", CC="clang" }
+
+[[tool.cibuildwheel.overrides]]
+select = "*linux_aarch64"
+# Only run testcheck, since the other tests are slow and can be flaky (because of TimeoutError).
+test-command = """ \
+  ( \
+     DIR=$(python -c 'import mypy, os; dn = os.path.dirname; print(dn(dn(mypy.__path__[0])))') \
+     && cp '{project}/mypy/pyproject.toml' '{project}/mypy/conftest.py' $DIR \
+\
+     && MYPY_TEST_DIR=$(python -c 'import mypy.test; print(mypy.test.__path__[0])') \
+\
+     && MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPY_TEST_DIR/testcheck.py \
+   )
+"""

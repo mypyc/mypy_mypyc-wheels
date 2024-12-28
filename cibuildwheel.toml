@@ -6,12 +6,13 @@ linux.manylinux-aarch64-image = "manylinux_2_28"
 linux.musllinux-x86_64-image = "musllinux_1_1"  # Change to musllinux_1_2 at some point
 linux.musllinux-aarch64-image = "musllinux_1_1"  # Change to musllinux_1_2 at some point
 
-# Don't build 32-bit wheels or PyPy
+# Don't build 32-bit wheels / PyPy / musllinux arm64
 skip = [
   "*-manylinux_i686",
   "*-musllinux_i686",
   "*-win32",
   "pp*",
+  "*-musllinux_aarch64",
 ]
 
 # Python 3.8 can't be tested on macOS arm64

@@ -85,17 +85,3 @@ before-test = [
   "pip install -r {project}/mypy/test-requirements.txt",
 ]
 environment = { MYPYC_OPT_LEVEL="3", MYPYC_DEBUG_LEVEL="0", CC="clang" }
-
-[[tool.cibuildwheel.overrides]]
-select = "*linux_aarch64"
-# Only run testcheck, since the other tests are slow and can be flaky (because of TimeoutError).
-test-command = """ \
-  ( \
-     DIR=$(python -c 'import mypy, os; dn = os.path.dirname; print(dn(dn(mypy.__path__[0])))') \
-     && cp '{project}/mypy/pyproject.toml' '{project}/mypy/conftest.py' $DIR \
-\
-     && MYPY_TEST_DIR=$(python -c 'import mypy.test; print(mypy.test.__path__[0])') \
-\
-     && MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPY_TEST_DIR/testcheck.py \
-   )
-"""

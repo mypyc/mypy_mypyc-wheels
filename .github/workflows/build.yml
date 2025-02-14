@@ -32,7 +32,7 @@ jobs:
               cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform linux --archs x86_64 mypy \
               | pyp 'json.dumps({"only": x, "os": "ubuntu-latest"})' \
               && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform linux --archs aarch64 mypy \
-              | pyp 'json.dumps({"only": x, "os": "ubuntu-24.04-arm"})' \
+              | pyp 'json.dumps({"only": x, "os": "ubuntu-22.04-arm"})' \
               && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform macos mypy \
               | pyp 'json.dumps({"only": x, "os": "macos-latest"})' \
               && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform windows mypy \

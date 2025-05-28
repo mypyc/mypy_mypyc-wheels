@@ -78,6 +78,7 @@ jobs:
   build_sdist_python_wheel:
     name: sdist and python wheel
     runs-on: ubuntu-latest
+    if: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -113,6 +114,7 @@ jobs:
   build_wasm_wheel:
     name: WASM wheel for 3.10
     runs-on: ubuntu-latest
+    if: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

@@ -19,7 +19,9 @@ skip = [
   "cp310-*",
   "cp311-*",
   "cp312-*",
-  "cp313-*",
+  # "cp313-*",
+  "*-musllinux_*",
+  "*-macosx_x86_64",
 ]
 
 # Python 3.8 can't be tested on macOS arm64

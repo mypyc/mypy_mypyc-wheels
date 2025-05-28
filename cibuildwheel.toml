@@ -58,7 +58,7 @@ test-command = """ \
      && echo "MYPY_TEST_DIR=${MYPY_TEST_DIR}" \
      && echo "MYPYC_TEST_DIR=${MYPYC_TEST_DIR}" \
 \
-     && MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPY_TEST_DIR $MYPYC_TEST_DIR -k 'testTypeErrorMessages or not test_external' \
+     && MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPY_TEST_DIR $MYPYC_TEST_DIR -k 'testTypeErrorMessages' \
    )
 """
 

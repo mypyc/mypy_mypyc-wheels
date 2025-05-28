@@ -40,13 +40,14 @@ before-test = [
   "pip install -r {project}/mypy/test-requirements.txt",
 ]
 
-test-environment = { PYTHONSAFEPATH="" }
+# test-environment = { PYTHONSAFEPATH="" }
 
 # pytest looks for configuration files in the parent directories of where the tests live.
 # since we are trying to run the tests from their installed location, we copy those into
 # the venv. Ew ew ew.
 # We don't run external mypyc tests since there's some issue with compilation on the
 # manylinux image we use.
+test-sources = ["*"]
 test-command = """ \
   ( \
      DIR=$(python -c 'import mypy, os; dn = os.path.dirname; print(dn(dn(mypy.__path__[0])))') \

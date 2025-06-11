@@ -23,7 +23,7 @@ jobs:
           git -C mypy checkout $(cat mypy_commit)
       - name: Install cibuildwheel and pypyp
         run: |
-          pipx install cibuildwheel==2.23.2
+          pipx install cibuildwheel==3.0.0
           pipx install pypyp==1.3.0
       - id: set-matrix
         run: |
@@ -63,7 +63,7 @@ jobs:
           git clone https://github.com/python/mypy.git --recurse-submodules
           git -C mypy checkout $(cat mypy_commit)
 
-      - uses: pypa/cibuildwheel@v2.23.2
+      - uses: pypa/cibuildwheel@v3.0.0
         with:
           config-file: cibuildwheel.toml
           package-dir: mypy

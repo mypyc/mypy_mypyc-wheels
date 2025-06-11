@@ -6,17 +6,13 @@ linux.manylinux-aarch64-image = "manylinux_2_28"
 linux.musllinux-x86_64-image = "musllinux_1_2"
 linux.musllinux-aarch64-image = "musllinux_1_2"
 
-# Don't build 32-bit wheels / PyPy / musllinux arm64
+enable = []
+
+# Don't build musllinux arm64, PyPy and 32-bit Linux are skipped by default
 skip = [
-  "*-manylinux_i686",
-  "*-musllinux_i686",
   "*-win32",
-  "pp*",
   "*-musllinux_aarch64",
 ]
-
-# Python 3.8 can't be tested on macOS arm64
-test-skip = "cp38-macosx_arm64"
 
 build-verbosity = 1
 

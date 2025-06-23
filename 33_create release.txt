@@ -1,0 +1,377 @@
+﻿2025-06-01T03:50:25.4106059Z Current runner version: '2.324.0'
+2025-06-01T03:50:25.4133098Z ##[group]Runner Image Provisioner
+2025-06-01T03:50:25.4134059Z Hosted Compute Agent
+2025-06-01T03:50:25.4134605Z Version: 20250508.323
+2025-06-01T03:50:25.4135198Z Commit: 81b259f29879f73b4213d199e42d8c3465dae986
+2025-06-01T03:50:25.4135928Z Build Date: 2025-05-08T19:40:08Z
+2025-06-01T03:50:25.4136495Z ##[endgroup]
+2025-06-01T03:50:25.4137049Z ##[group]Operating System
+2025-06-01T03:50:25.4137564Z Ubuntu
+2025-06-01T03:50:25.4138111Z 24.04.2
+2025-06-01T03:50:25.4138539Z LTS
+2025-06-01T03:50:25.4138973Z ##[endgroup]
+2025-06-01T03:50:25.4139490Z ##[group]Runner Image
+2025-06-01T03:50:25.4140066Z Image: ubuntu-24.04
+2025-06-01T03:50:25.4140533Z Version: 20250511.1.0
+2025-06-01T03:50:25.4141888Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250511.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-06-01T03:50:25.4143435Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250511.1
+2025-06-01T03:50:25.4144494Z ##[endgroup]
+2025-06-01T03:50:25.4146940Z ##[group]GITHUB_TOKEN Permissions
+2025-06-01T03:50:25.4149228Z Actions: write
+2025-06-01T03:50:25.4149746Z Attestations: write
+2025-06-01T03:50:25.4150265Z Checks: write
+2025-06-01T03:50:25.4150765Z Contents: write
+2025-06-01T03:50:25.4151487Z Deployments: write
+2025-06-01T03:50:25.4152062Z Discussions: write
+2025-06-01T03:50:25.4152581Z Issues: write
+2025-06-01T03:50:25.4153093Z Metadata: read
+2025-06-01T03:50:25.4153544Z Models: read
+2025-06-01T03:50:25.4154070Z Packages: write
+2025-06-01T03:50:25.4154552Z Pages: write
+2025-06-01T03:50:25.4155035Z PullRequests: write
+2025-06-01T03:50:25.4155548Z RepositoryProjects: write
+2025-06-01T03:50:25.4156174Z SecurityEvents: write
+2025-06-01T03:50:25.4156887Z Statuses: write
+2025-06-01T03:50:25.4157340Z ##[endgroup]
+2025-06-01T03:50:25.4159623Z Secret source: Actions
+2025-06-01T03:50:25.4160317Z Prepare workflow directory
+2025-06-01T03:50:25.4632409Z Prepare all required actions
+2025-06-01T03:50:25.4689671Z Getting action download info
+2025-06-01T03:50:25.8049538Z ##[group]Download immutable action package 'actions/download-artifact@v4'
+2025-06-01T03:50:25.8050819Z Version: 4.3.0
+2025-06-01T03:50:25.8052420Z Digest: sha256:552a5b9ad918f62ec0c2e8f42f3c694d4ebd1b4036b18c39b14168fcdfc0e4f2
+2025-06-01T03:50:25.8053818Z Source commit SHA: d3f86a106a0bac45b974a628896c90dbdf5c8093
+2025-06-01T03:50:25.8054565Z ##[endgroup]
+2025-06-01T03:50:26.0799329Z ##[group]Download immutable action package 'actions/github-script@v7'
+2025-06-01T03:50:26.0800243Z Version: 7.0.1
+2025-06-01T03:50:26.0801093Z Digest: sha256:bce02966afe3a75123f766b765abe432fac5464b74976015dc06b811ac9054c7
+2025-06-01T03:50:26.0802415Z Source commit SHA: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
+2025-06-01T03:50:26.0803168Z ##[endgroup]
+2025-06-01T03:50:26.3705678Z Complete job name: create release
+2025-06-01T03:50:26.4564482Z ##[group]Run actions/download-artifact@v4
+2025-06-01T03:50:26.4565987Z with:
+2025-06-01T03:50:26.4566786Z   pattern: dist-*
+2025-06-01T03:50:26.4567652Z   path: dist
+2025-06-01T03:50:26.4568478Z   merge-multiple: true
+2025-06-01T03:50:26.4569428Z   repository: mypyc/mypy_mypyc-wheels
+2025-06-01T03:50:26.4570508Z   run-id: 15369534423
+2025-06-01T03:50:26.4571921Z ##[endgroup]
+2025-06-01T03:50:26.8002387Z Found 32 artifact(s)
+2025-06-01T03:50:26.8004634Z Filtering artifacts by pattern 'dist-*'
+2025-06-01T03:50:26.8023398Z Preparing to download the following artifacts:
+2025-06-01T03:50:26.8027501Z - dist-cp310-macosx_x86_64 (ID: 3235379163, Size: 10792102, Expected Digest: sha256:22dc5ee0401866854ed7b120621b6c6b7a187116da39a058e53c0d857b8ec92c)
+2025-06-01T03:50:26.8032567Z - dist-cp311-macosx_x86_64 (ID: 3235376845, Size: 10720687, Expected Digest: sha256:c220ff26e583dc38cd47253788b1de90878a9c2a3f58af2b9e3fa0aca84676e1)
+2025-06-01T03:50:26.8037207Z - dist-cp313-macosx_x86_64 (ID: 3235366586, Size: 10891526, Expected Digest: sha256:51163ca0c4f36a404bdaae2f566a20368ff68213954ceb2d5b9efdf7deaad4e4)
+2025-06-01T03:50:26.8041993Z - dist-cp310-macosx_arm64 (ID: 3235334097, Size: 9913204, Expected Digest: sha256:9af3c6ce5668583d700e62f25e075110e4dff3f2737a55b43402a40ad51cdc57)
+2025-06-01T03:50:26.8047832Z - dist-cp311-macosx_arm64 (ID: 3235305517, Size: 9839169, Expected Digest: sha256:30bb6a640ec9a0c54c1e35ac0f249d75c1c812330bb4fde8da221b9ba4a42ed3)
+2025-06-01T03:50:26.8051780Z - dist-cp312-macosx_arm64 (ID: 3235262211, Size: 9906909, Expected Digest: sha256:0a3ba90c3a07746c7b41226253da1ced62de9dc72cc8db383cb17396d94a8161)
+2025-06-01T03:50:26.8057047Z - dist-cp39-macosx_x86_64 (ID: 3235258958, Size: 10793305, Expected Digest: sha256:873a4b08ab021fbd9142b1f705ea2e0db7a6dcc0e5d0186efcb6acf31a02dae2)
+2025-06-01T03:50:26.8062407Z - dist-cp312-musllinux_x86_64 (ID: 3235244395, Size: 12693190, Expected Digest: sha256:d295470e25adb7ee8462dfe6d746e30416e9e44412fe0eb5a7a4d82d00e489f2)
+2025-06-01T03:50:26.8067082Z - dist-cp310-musllinux_x86_64 (ID: 3235232627, Size: 12641359, Expected Digest: sha256:4d6926f0cc1c195c9ecb8cf0dae20ef6af3ce301d0b11d5618f2035d824c1967)
+2025-06-01T03:50:26.8072424Z - dist-cp313-macosx_arm64 (ID: 3235231889, Size: 9902439, Expected Digest: sha256:1f78d17cb8a6069a09616f29862b484f76dfa649dea92f4815b941439f37ad19)
+2025-06-01T03:50:26.8077584Z - dist-cp313-musllinux_x86_64 (ID: 3235229838, Size: 12688920, Expected Digest: sha256:d3902e260ea25ec9c45aa470f279edcecd5dd443f0095b1e0acd8b16f6fab199)
+2025-06-01T03:50:26.8082825Z - dist-cp39-musllinux_x86_64 (ID: 3235229324, Size: 12647948, Expected Digest: sha256:9f775ef8e3319abc3074b35eec3b7b17a68c32256ac834d9d8e93a775c5af85a)
+2025-06-01T03:50:26.8088828Z - dist-cp313-manylinux_aarch64 (ID: 3235227350, Size: 11556141, Expected Digest: sha256:d3d9aa065afc085f6146cae3c9988771abcee8a7bdb25c263fde7a2a91756b32)
+2025-06-01T03:50:26.8094130Z - dist-cp313-manylinux_x86_64 (ID: 3235225032, Size: 12482039, Expected Digest: sha256:6aea2947646669e05ab89579db9c43ec6abad8cf0c4e14a72380c642452a6d4d)
+2025-06-01T03:50:26.8097739Z - dist-cp312-macosx_x86_64 (ID: 3235215776, Size: 10896969, Expected Digest: sha256:7842a294d7fc19a1b70a784326a4f716f6f125c470d85901fb807664ab154a86)
+2025-06-01T03:50:26.8102087Z - dist-cp311-manylinux_aarch64 (ID: 3235214191, Size: 11506718, Expected Digest: sha256:573c15753b3e80db7c326712d4512a7b5208b5742ee6d5b5860a05f01a630f93)
+2025-06-01T03:50:26.8106923Z - dist-cp39-macosx_arm64 (ID: 3235210942, Size: 9917189, Expected Digest: sha256:9003b8d740750cc44206910c4e74d276ec6b78ce842c594b85eae7117fb8054a)
+2025-06-01T03:50:26.8110371Z - dist-cp311-win_amd64 (ID: 3235210327, Size: 9262960, Expected Digest: sha256:661d46462428fc4af022529cadadde42c0b1175f5fb652984fcc853c61ce6d77)
+2025-06-01T03:50:26.8114723Z - dist-cp312-manylinux_x86_64 (ID: 3235199870, Size: 12479803, Expected Digest: sha256:e59fb5f59fa95a3392d0183fea5525f422ade3822c5e6bca4ce57a67d3379aa2)
+2025-06-01T03:50:26.8118808Z - dist-cp312-manylinux_aarch64 (ID: 3235199407, Size: 11552437, Expected Digest: sha256:49051e562f9f0b3abd074ec33da4939730e83ef1205a982841123ebcba954c4c)
+2025-06-01T03:50:26.8122678Z - dist-cp311-musllinux_x86_64 (ID: 3235197747, Size: 12505797, Expected Digest: sha256:e8f5ae0a90bd59077a180ee74a8a75e346879c48327104c5bab1928ad4a3e46a)
+2025-06-01T03:50:26.8128436Z - dist-cp39-win_amd64 (ID: 3235196027, Size: 9256361, Expected Digest: sha256:d14e0c46585a04556d8754f77f9dce8be4ab756af1e31429e44f0f9734ba91ad)
+2025-06-01T03:50:26.8132314Z - dist-cp310-manylinux_x86_64 (ID: 3235195472, Size: 12382738, Expected Digest: sha256:ccdb16ec785d1f627b8304d0e94f639c3776ed174aa48c6e97f96e5022453427)
+2025-06-01T03:50:26.8135803Z - dist-cp310-win_amd64 (ID: 3235191079, Size: 9284756, Expected Digest: sha256:9f108e0c80befd3e46fb77a68b8f19aa9571f17cd3fbb94792564be3e84ee961)
+2025-06-01T03:50:26.8139874Z - dist-cp313-win_amd64 (ID: 3235183856, Size: 9351963, Expected Digest: sha256:33f1da62df83ab9e8ed99637a5ccdb2d8e1c4bf11a18c24211020d1de7aebc41)
+2025-06-01T03:50:26.8145315Z - dist-cp39-manylinux_x86_64 (ID: 3235183400, Size: 12375689, Expected Digest: sha256:e457564347e7b14143017f32cb69962063b376f1c42c8a74c5306b9c35591ea2)
+2025-06-01T03:50:26.8151101Z - dist-cp311-manylinux_x86_64 (ID: 3235179198, Size: 12292299, Expected Digest: sha256:3eeb49560a3c5fa9ba12a4ce628de2195c02bc28936aeac0b80ef5fed494dedf)
+2025-06-01T03:50:26.8158250Z - dist-cp39-manylinux_aarch64 (ID: 3235176702, Size: 11585752, Expected Digest: sha256:cdef98007c40ba39c29d171085bcf11d19576ff4b7eaecc0149f9a4422bf9e90)
+2025-06-01T03:50:26.8164822Z - dist-cp310-manylinux_aarch64 (ID: 3235173920, Size: 11586343, Expected Digest: sha256:4c4f68453543f357ea9dc080fdb2bebaf2be6dbf9f3c9504f3138923936f32cb)
+2025-06-01T03:50:26.8171040Z - dist-cp312-win_amd64 (ID: 3235163901, Size: 9344776, Expected Digest: sha256:6e687f2e38faee2557626dffca071f572237b4e9818d65da9f33907755024913)
+2025-06-01T03:50:26.8176725Z - dist-wasm_wheel (ID: 3235144776, Size: 6571950, Expected Digest: sha256:9aa5a59ad9c858986df727fb14c05de9d0befab6d1394cdc75de837687abfcbc)
+2025-06-01T03:50:26.8180388Z - dist-sdist_python_wheel (ID: 3235121317, Size: 5484793, Expected Digest: sha256:ca892ee675dbf76fc8a210866656b4a701f1e7ed5bc92522678fcb1ee66c455a)
+2025-06-01T03:50:26.9024751Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-03a035b5-07ac-55cc-a902-b62817de5857/artifacts/93274f6c2c21c8fea0b234ffbde1cab6015a0f585c2e5d941fda0bf8c1443ccb.zip
+2025-06-01T03:50:26.9030670Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:26.9830793Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-20b84f3b-0c15-50a4-8053-634e6b687c75/artifacts/fe3bf0db9512a07a59ee252bd662e41779fd78fb095373d825522c22600cdc19.zip
+2025-06-01T03:50:26.9839435Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:26.9849253Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-3c23f566-53db-5f6f-8bc7-9f4c92d3f5a1/artifacts/d825c8dcea65a26cb2b0d9c152a540516d7114a1535af1a0b17654f387529720.zip
+2025-06-01T03:50:26.9855098Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:26.9891486Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-426ac87d-7c83-5292-affd-16419d34ce98/artifacts/6ae7736b0eb974ef5928b50077bada9b39ef63eb39db2ad518fbc5906c2577bc.zip
+2025-06-01T03:50:26.9900321Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:26.9929694Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-571909e0-8c09-5b72-9e43-f17cd445bf41/artifacts/b509e158501a714fc1d91a4c5e76f0998ca9eb6101403be0272cc3e9c480bad9.zip
+2025-06-01T03:50:26.9937933Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0030022Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-2709c388-914e-510f-a14d-25ca2cf1833c/artifacts/29159bfc4a439ba22faa3e70caa032dca4af258cea2b54ac2135af90d6b05945.zip
+2025-06-01T03:50:27.0038784Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0056975Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-dced0948-f6d8-5b2e-90c5-063eff282d8b/artifacts/850e9fcfba62c94fdc0ce17ca9cf1cba616c019ec40cf7520e133256a579fdce.zip
+2025-06-01T03:50:27.0066007Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0083568Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-9ec31491-79ea-5217-9e5f-10a54ee505b1/artifacts/8c639d2bd80a5f9b49e78724c2bb428895222dabb6e55b8bded664a1710dd310.zip
+2025-06-01T03:50:27.0093164Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0125954Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-9fef944c-0610-52d8-a69b-7e183f11dc36/artifacts/54ec18fe7528280e55ba67deb60e759f98e09de5851605eb1741494de901e3dc.zip
+2025-06-01T03:50:27.0135125Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0155877Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-5a95a59e-df55-5a6e-9736-ddb88501aae6/artifacts/19b93976dc35c4048703ef09c56a3326ff4e6f9058573de5f9ceb5b10d181a19.zip
+2025-06-01T03:50:27.0165187Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0184105Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-68cad85a-d866-5ff5-b49a-72ed24ec8aa9/artifacts/dbf137f4ed399ea4b6a8363a0ff21786148f71cf348c0b030aa061382e75016b.zip
+2025-06-01T03:50:27.0193361Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0211896Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-26dd9ef0-8ed4-53a4-b9ec-3f40ff621ee3/artifacts/e9366bd623bb7e4f780a3839b6eb9fa427a6b3fa35a8fef1242822c81c65a7db.zip
+2025-06-01T03:50:27.0221490Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0254155Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-3c864d92-dead-5b02-b4e3-9c9f71ec89fd/artifacts/6a810547e3992cab1261007677fdc99cdd146a8d294eaaa194805fb3e13eef62.zip
+2025-06-01T03:50:27.0263417Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0282893Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-ef105798-f59e-5810-af39-13e7f68ee445/artifacts/febc2be3394c9603e0eceacc54e1b2b1526286f01996f131e40cd68845e388b9.zip
+2025-06-01T03:50:27.0292230Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0311882Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-b4e19236-2f8f-5797-a0ff-c2620f189dbd/artifacts/5d7008524fa91095b21b80f500a28cf4ab8280800b85e1040badbe898ea330b7.zip
+2025-06-01T03:50:27.0321003Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0339942Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-2d23bc6c-dcfc-5e6b-8c97-683cc9ae39f5/artifacts/42115917dc9c806e5374f5640fef860d6f9e5e9b9c6f8a4e528a7142618fdb6e.zip
+2025-06-01T03:50:27.0349412Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0374032Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-dcd3336b-d232-5d2a-b6cb-2458755842b2/artifacts/d62473020107249cf96a618f11a2792b9b43bfe0b5dfb3661bffc13bc8cff1b2.zip
+2025-06-01T03:50:27.0383648Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0402932Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-261a5032-c8fb-5cec-9ca0-b66d05f10b7d/artifacts/34483b26e87fe5a211297e791db5482e7ec3d3ab00c8d925883c64b2ec991bd2.zip
+2025-06-01T03:50:27.0412737Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0432228Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-82bbb1c1-ac32-54d5-8cc9-53cb7f75b18b/artifacts/a3f86ce061f55c8024c3bfccb289f6d6303e108bafb0728d3300393a5b20b30c.zip
+2025-06-01T03:50:27.0441857Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0461788Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-3be90538-dc72-5bc3-ab8d-5e8674e6b256/artifacts/a884c60caccda6366c4cf8be5a41c7f09a01fa073e7b3d7f7c5ee7d2eca98a26.zip
+2025-06-01T03:50:27.0471640Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0492306Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-c901b306-e812-5e9a-806a-469f3d0c585a/artifacts/1f27195239a4a37367c3102206adfa3d7a81dee5285fc9b0f987d013428e5f08.zip
+2025-06-01T03:50:27.0502101Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0522331Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-d48adff0-dbdd-5d5f-a277-9ae5f19a6ea2/artifacts/3606b932e2ace2fa3dc52f4ec2add99fb3d042ccceeac77615c6e78cf7a90e87.zip
+2025-06-01T03:50:27.0532505Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0552940Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-91d7fe25-9cbe-51a3-8199-18072c985180/artifacts/5e1772579e284bc819bd1cbfc18399df3965cb2055f5c2286a426155b163936c.zip
+2025-06-01T03:50:27.0562933Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0583798Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-69549aae-80eb-5fc7-87c8-b3f11442197e/artifacts/a5298306a86c84d3144e3933fb1a5358e51ea76099474111e3c3858ba7633c5d.zip
+2025-06-01T03:50:27.0593898Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0614575Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-560240cd-06a5-52f9-a3d5-c95e29707f62/artifacts/b065b91353b21e176ee99f886d2fe9fcdfba7ccd56f6885fa92d1a711e3f82bd.zip
+2025-06-01T03:50:27.0624939Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0645700Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-08f3032f-4c59-597a-89e1-6f3ff3cc9c72/artifacts/19c7157cd5d6a7ebe4ddc5de2448b90310f6144fb822044cab60b19c72390119.zip
+2025-06-01T03:50:27.0655953Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0677925Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-93e1b1ff-445a-5841-90d2-f8b34444dad7/artifacts/b226d3a7e39fb96e877d5d0c889bda436cb455713b55a28269c1d55de5ad037f.zip
+2025-06-01T03:50:27.0688476Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0710388Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-8446f7a2-abcc-5156-9b59-95eec9e00143/artifacts/f35afafea4b1fc5d859d11e515242d4ba278dde97c10b75daa876bea976a46d7.zip
+2025-06-01T03:50:27.0720940Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0742912Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-3276dff0-a6ee-56da-802e-90039e373f0c/artifacts/2e6e9a5d516e86cd2f44694cd566dd9716b420f0c9ee725540c24374d7974c63.zip
+2025-06-01T03:50:27.0749854Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0763218Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-ebbe4ffe-8cf5-50f7-b6b5-3b4a55bc4d39/artifacts/1ae4a8433c28baa291015b3b47fc5cb9737f8d749d4c53c14bb78dfb8a07ee4a.zip
+2025-06-01T03:50:27.0768885Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0781554Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-5504c231-b7f6-55db-af6b-6b704a0f4e9b/artifacts/e377bde732225c1f7d12a38dd0360710247b01935963b8bfbef2144c99259ccc.zip
+2025-06-01T03:50:27.0787435Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.0801010Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/7b7fb8a0-9663-4c55-9cae-13ce5ea49dbf/workflow-job-run-3507e9e1-dc34-588e-bf02-1bbdf17644a5/artifacts/faa55662025ee4b857dcad9ec161e2cbb1b686b9a9215dfe35be6fb1843fdcf8.zip
+2025-06-01T03:50:27.0807319Z Starting download of artifact to: /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/dist
+2025-06-01T03:50:27.1420637Z (node:1977) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2025-06-01T03:50:27.1425665Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2025-06-01T03:50:28.8842336Z SHA256 digest of downloaded artifact is ca892ee675dbf76fc8a210866656b4a701f1e7ed5bc92522678fcb1ee66c455a
+2025-06-01T03:50:28.8845147Z Artifact download completed successfully.
+2025-06-01T03:50:29.1698790Z SHA256 digest of downloaded artifact is 9aa5a59ad9c858986df727fb14c05de9d0befab6d1394cdc75de837687abfcbc
+2025-06-01T03:50:29.7141778Z Artifact download completed successfully.
+2025-06-01T03:50:29.7143397Z SHA256 digest of downloaded artifact is 661d46462428fc4af022529cadadde42c0b1175f5fb652984fcc853c61ce6d77
+2025-06-01T03:50:29.7144759Z Artifact download completed successfully.
+2025-06-01T03:50:29.7395535Z SHA256 digest of downloaded artifact is 9f108e0c80befd3e46fb77a68b8f19aa9571f17cd3fbb94792564be3e84ee961
+2025-06-01T03:50:29.7396928Z Artifact download completed successfully.
+2025-06-01T03:50:29.7460985Z SHA256 digest of downloaded artifact is d14e0c46585a04556d8754f77f9dce8be4ab756af1e31429e44f0f9734ba91ad
+2025-06-01T03:50:29.7463201Z Artifact download completed successfully.
+2025-06-01T03:50:29.7771995Z SHA256 digest of downloaded artifact is 33f1da62df83ab9e8ed99637a5ccdb2d8e1c4bf11a18c24211020d1de7aebc41
+2025-06-01T03:50:29.7774240Z Artifact download completed successfully.
+2025-06-01T03:50:29.8242154Z SHA256 digest of downloaded artifact is 6e687f2e38faee2557626dffca071f572237b4e9818d65da9f33907755024913
+2025-06-01T03:50:29.8243498Z Artifact download completed successfully.
+2025-06-01T03:50:29.8320885Z SHA256 digest of downloaded artifact is 9af3c6ce5668583d700e62f25e075110e4dff3f2737a55b43402a40ad51cdc57
+2025-06-01T03:50:29.8322738Z Artifact download completed successfully.
+2025-06-01T03:50:29.8640834Z SHA256 digest of downloaded artifact is 9003b8d740750cc44206910c4e74d276ec6b78ce842c594b85eae7117fb8054a
+2025-06-01T03:50:29.8642407Z Artifact download completed successfully.
+2025-06-01T03:50:29.8657238Z SHA256 digest of downloaded artifact is 0a3ba90c3a07746c7b41226253da1ced62de9dc72cc8db383cb17396d94a8161
+2025-06-01T03:50:29.8658724Z Artifact download completed successfully.
+2025-06-01T03:50:29.8670540Z SHA256 digest of downloaded artifact is 1f78d17cb8a6069a09616f29862b484f76dfa649dea92f4815b941439f37ad19
+2025-06-01T03:50:29.8671987Z Artifact download completed successfully.
+2025-06-01T03:50:29.9716990Z SHA256 digest of downloaded artifact is 22dc5ee0401866854ed7b120621b6c6b7a187116da39a058e53c0d857b8ec92c
+2025-06-01T03:50:29.9718335Z Artifact download completed successfully.
+2025-06-01T03:50:29.9757940Z SHA256 digest of downloaded artifact is 30bb6a640ec9a0c54c1e35ac0f249d75c1c812330bb4fde8da221b9ba4a42ed3
+2025-06-01T03:50:29.9759570Z Artifact download completed successfully.
+2025-06-01T03:50:29.9861461Z SHA256 digest of downloaded artifact is c220ff26e583dc38cd47253788b1de90878a9c2a3f58af2b9e3fa0aca84676e1
+2025-06-01T03:50:29.9862818Z Artifact download completed successfully.
+2025-06-01T03:50:29.9939318Z SHA256 digest of downloaded artifact is 51163ca0c4f36a404bdaae2f566a20368ff68213954ceb2d5b9efdf7deaad4e4
+2025-06-01T03:50:29.9940906Z Artifact download completed successfully.
+2025-06-01T03:50:30.0057277Z SHA256 digest of downloaded artifact is 873a4b08ab021fbd9142b1f705ea2e0db7a6dcc0e5d0186efcb6acf31a02dae2
+2025-06-01T03:50:30.0058496Z Artifact download completed successfully.
+2025-06-01T03:50:30.0242761Z SHA256 digest of downloaded artifact is 7842a294d7fc19a1b70a784326a4f716f6f125c470d85901fb807664ab154a86
+2025-06-01T03:50:30.0243996Z Artifact download completed successfully.
+2025-06-01T03:50:30.0904265Z SHA256 digest of downloaded artifact is d3d9aa065afc085f6146cae3c9988771abcee8a7bdb25c263fde7a2a91756b32
+2025-06-01T03:50:30.0905621Z Artifact download completed successfully.
+2025-06-01T03:50:30.0920117Z SHA256 digest of downloaded artifact is 573c15753b3e80db7c326712d4512a7b5208b5742ee6d5b5860a05f01a630f93
+2025-06-01T03:50:30.0922315Z Artifact download completed successfully.
+2025-06-01T03:50:30.1011527Z SHA256 digest of downloaded artifact is 4c4f68453543f357ea9dc080fdb2bebaf2be6dbf9f3c9504f3138923936f32cb
+2025-06-01T03:50:30.1012811Z Artifact download completed successfully.
+2025-06-01T03:50:30.1045953Z SHA256 digest of downloaded artifact is 49051e562f9f0b3abd074ec33da4939730e83ef1205a982841123ebcba954c4c
+2025-06-01T03:50:30.1047025Z Artifact download completed successfully.
+2025-06-01T03:50:30.1050788Z SHA256 digest of downloaded artifact is cdef98007c40ba39c29d171085bcf11d19576ff4b7eaecc0149f9a4422bf9e90
+2025-06-01T03:50:30.1052301Z Artifact download completed successfully.
+2025-06-01T03:50:30.1407765Z SHA256 digest of downloaded artifact is 3eeb49560a3c5fa9ba12a4ce628de2195c02bc28936aeac0b80ef5fed494dedf
+2025-06-01T03:50:30.1409053Z Artifact download completed successfully.
+2025-06-01T03:50:30.1447236Z SHA256 digest of downloaded artifact is ccdb16ec785d1f627b8304d0e94f639c3776ed174aa48c6e97f96e5022453427
+2025-06-01T03:50:30.1448038Z Artifact download completed successfully.
+2025-06-01T03:50:30.1547165Z SHA256 digest of downloaded artifact is e59fb5f59fa95a3392d0183fea5525f422ade3822c5e6bca4ce57a67d3379aa2
+2025-06-01T03:50:30.1547984Z Artifact download completed successfully.
+2025-06-01T03:50:30.1578565Z SHA256 digest of downloaded artifact is e8f5ae0a90bd59077a180ee74a8a75e346879c48327104c5bab1928ad4a3e46a
+2025-06-01T03:50:30.1579831Z Artifact download completed successfully.
+2025-06-01T03:50:30.1625814Z SHA256 digest of downloaded artifact is 6aea2947646669e05ab89579db9c43ec6abad8cf0c4e14a72380c642452a6d4d
+2025-06-01T03:50:30.1626626Z Artifact download completed successfully.
+2025-06-01T03:50:30.1634767Z SHA256 digest of downloaded artifact is 4d6926f0cc1c195c9ecb8cf0dae20ef6af3ce301d0b11d5618f2035d824c1967
+2025-06-01T03:50:30.1636480Z Artifact download completed successfully.
+2025-06-01T03:50:30.1637805Z SHA256 digest of downloaded artifact is 9f775ef8e3319abc3074b35eec3b7b17a68c32256ac834d9d8e93a775c5af85a
+2025-06-01T03:50:30.1639117Z Artifact download completed successfully.
+2025-06-01T03:50:30.1640415Z SHA256 digest of downloaded artifact is d3902e260ea25ec9c45aa470f279edcecd5dd443f0095b1e0acd8b16f6fab199
+2025-06-01T03:50:30.1641902Z Artifact download completed successfully.
+2025-06-01T03:50:30.1643192Z SHA256 digest of downloaded artifact is d295470e25adb7ee8462dfe6d746e30416e9e44412fe0eb5a7a4d82d00e489f2
+2025-06-01T03:50:30.1644585Z Artifact download completed successfully.
+2025-06-01T03:50:30.1668652Z SHA256 digest of downloaded artifact is e457564347e7b14143017f32cb69962063b376f1c42c8a74c5306b9c35591ea2
+2025-06-01T03:50:30.1669871Z Artifact download completed successfully.
+2025-06-01T03:50:30.1670731Z Total of 32 artifact(s) downloaded
+2025-06-01T03:50:30.1677247Z Download artifact has finished successfully
+2025-06-01T03:50:30.1989128Z ##[group]Run actions/github-script@v7
+2025-06-01T03:50:30.1989829Z with:
+2025-06-01T03:50:30.1990854Z   github-token: ***
+2025-06-01T03:50:30.1995288Z   script: const fs = require('fs').promises;
+const { repo: { owner, repo }, sha } = context;
+
+console.log('environment', process.versions);
+console.log({ owner, repo, sha });
+
+const release = await github.rest.repos.createRelease({
+  owner, repo,
+  // if GITHUB_REF just appears to be a branch, use tag-{commit} as the tag
+  tag_name: process.env.GITHUB_REF.includes("refs/heads/") ? "tag-" + sha : process.env.GITHUB_REF.split("/").pop(),
+  target_commitish: sha
+});
+
+console.log('created release', { release });
+
+for (let file of await fs.readdir('dist')) {
+  console.log('uploading', file);
+
+  await github.rest.repos.uploadReleaseAsset({
+    owner, repo,
+    release_id: release.data.id,
+    name: file,
+    data: await fs.readFile(`./dist/${file}`)
+  });
+}
+
+2025-06-01T03:50:30.1999386Z   debug: false
+2025-06-01T03:50:30.1999833Z   user-agent: actions/github-script
+2025-06-01T03:50:30.2000292Z   result-encoding: json
+2025-06-01T03:50:30.2000670Z   retries: 0
+2025-06-01T03:50:30.2001063Z   retry-exempt-status-codes: 400,401,403,404,422
+2025-06-01T03:50:30.2001692Z ##[endgroup]
+2025-06-01T03:50:30.2863336Z environment {
+2025-06-01T03:50:30.2863984Z   node: '20.19.1',
+2025-06-01T03:50:30.2864398Z   acorn: '8.14.0',
+2025-06-01T03:50:30.2864799Z   ada: '2.9.2',
+2025-06-01T03:50:30.2865178Z   ares: '1.34.5',
+2025-06-01T03:50:30.2865566Z   brotli: '1.1.0',
+2025-06-01T03:50:30.2865973Z   cjs_module_lexer: '1.4.1',
+2025-06-01T03:50:30.2866420Z   cldr: '46.0',
+2025-06-01T03:50:30.2866801Z   icu: '76.1',
+2025-06-01T03:50:30.2867283Z   llhttp: '8.1.2',
+2025-06-01T03:50:30.2867902Z   modules: '115',
+2025-06-01T03:50:30.2868507Z   napi: '9',
+2025-06-01T03:50:30.2868937Z   nghttp2: '1.61.0',
+2025-06-01T03:50:30.2869350Z   nghttp3: '0.7.0',
+2025-06-01T03:50:30.2869741Z   ngtcp2: '1.1.0',
+2025-06-01T03:50:30.2870220Z   openssl: '3.0.15+quic',
+2025-06-01T03:50:30.2870651Z   simdutf: '6.0.3',
+2025-06-01T03:50:30.2871032Z   tz: '2025a',
+2025-06-01T03:50:30.2871653Z   undici: '6.21.2',
+2025-06-01T03:50:30.2872039Z   unicode: '16.0',
+2025-06-01T03:50:30.2872422Z   uv: '1.46.0',
+2025-06-01T03:50:30.2872798Z   uvwasi: '0.0.21',
+2025-06-01T03:50:30.2873191Z   v8: '11.3.244.8-node.26',
+2025-06-01T03:50:30.2873621Z   zlib: '1.3.0.1-motley-82a5fec'
+2025-06-01T03:50:30.2874073Z }
+2025-06-01T03:50:30.2874452Z {
+2025-06-01T03:50:30.2874811Z   owner: 'mypyc',
+2025-06-01T03:50:30.2875205Z   repo: 'mypy_mypyc-wheels',
+2025-06-01T03:50:30.2875653Z   sha: 'c580a684254e81fe7c286daac7c96be68f52a94c'
+2025-06-01T03:50:30.2876114Z }
+2025-06-01T03:50:30.8925315Z created release {
+2025-06-01T03:50:30.8926049Z   release: {
+2025-06-01T03:50:30.8926634Z     status: 201,
+2025-06-01T03:50:30.8927519Z     url: 'https://api.github.com/repos/mypyc/mypy_mypyc-wheels/releases',
+2025-06-01T03:50:30.8928456Z     headers: {
+2025-06-01T03:50:30.8929483Z       'access-control-allow-origin': '*',
+2025-06-01T03:50:30.8932335Z       'access-control-expose-headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset',
+2025-06-01T03:50:30.8934787Z       'cache-control': 'private, max-age=60, s-maxage=60',
+2025-06-01T03:50:30.8935552Z       'content-length': '2100',
+2025-06-01T03:50:30.8936273Z       'content-security-policy': "default-src 'none'",
+2025-06-01T03:50:30.8937046Z       'content-type': 'application/json; charset=utf-8',
+2025-06-01T03:50:30.8937604Z       date: 'Sun, 01 Jun 2025 03:50:30 GMT',
+2025-06-01T03:50:30.8938243Z       etag: '"2fe1b9476483c639e8e5db3a8132740b788f35e6d2a2dd1cc1ad86fb2b4ea595"',
+2025-06-01T03:50:30.8938985Z       location: 'https://api.github.com/repos/mypyc/mypy_mypyc-wheels/releases/222256340',
+2025-06-01T03:50:30.8940047Z       'referrer-policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
+2025-06-01T03:50:30.8940639Z       server: 'github.com',
+2025-06-01T03:50:30.8941446Z       'strict-transport-security': 'max-age=31536000; includeSubdomains; preload',
+2025-06-01T03:50:30.8942346Z       vary: 'Accept, Authorization, Cookie, X-GitHub-OTP,Accept-Encoding, Accept, X-Requested-With',
+2025-06-01T03:50:30.8943626Z       'x-accepted-github-permissions': 'contents=write; contents=write,workflows=write',
+2025-06-01T03:50:30.8944239Z       'x-content-type-options': 'nosniff',
+2025-06-01T03:50:30.8944795Z       'x-frame-options': 'deny',
+2025-06-01T03:50:30.8945665Z       'x-github-api-version-selected': '2022-11-28',
+2025-06-01T03:50:30.8946410Z       'x-github-media-type': 'github.v3; format=json',
+2025-06-01T03:50:30.8947253Z       'x-github-request-id': '07C2:37F741:189D43:302A07:683BCE06',
+2025-06-01T03:50:30.8948189Z       'x-ratelimit-limit': '5000',
+2025-06-01T03:50:30.8948853Z       'x-ratelimit-remaining': '4932',
+2025-06-01T03:50:30.8949408Z       'x-ratelimit-reset': '1748752188',
+2025-06-01T03:50:30.8949849Z       'x-ratelimit-resource': 'core',
+2025-06-01T03:50:30.8950342Z       'x-ratelimit-used': '68',
+2025-06-01T03:50:30.8950809Z       'x-xss-protection': '0'
+2025-06-01T03:50:30.8951401Z     },
+2025-06-01T03:50:30.8951733Z     data: {
+2025-06-01T03:50:30.8952226Z       url: 'https://api.github.com/repos/mypyc/mypy_mypyc-wheels/releases/222256340',
+2025-06-01T03:50:30.8953590Z       assets_url: 'https://api.github.com/repos/mypyc/mypy_mypyc-wheels/releases/222256340/assets',
+2025-06-01T03:50:30.8955108Z       upload_url: 'https://uploads.github.com/repos/mypyc/mypy_mypyc-wheels/releases/222256340/assets{?name,label}',
+2025-06-01T03:50:30.8956734Z       html_url: 'https://github.com/mypyc/mypy_mypyc-wheels/releases/tag/v1.17.0%2Bdev.5fbfff97f2197b38321363f4d294f47009a28139',
+2025-06-01T03:50:30.8957454Z       id: 222256340,
+2025-06-01T03:50:30.8957827Z       author: [Object],
+2025-06-01T03:50:30.8958246Z       node_id: 'RE_kwDOCRay-c4NP1zU',
+2025-06-01T03:50:30.8958797Z       tag_name: 'v1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139',
+2025-06-01T03:50:30.8959417Z       target_commitish: 'c580a684254e81fe7c286daac7c96be68f52a94c',
+2025-06-01T03:50:30.8959925Z       name: null,
+2025-06-01T03:50:30.8960298Z       draft: false,
+2025-06-01T03:50:30.8960681Z       prerelease: false,
+2025-06-01T03:50:30.8961081Z       created_at: '2025-06-01T01:30:51Z',
+2025-06-01T03:50:30.8961831Z       published_at: '2025-06-01T03:50:30Z',
+2025-06-01T03:50:30.8962250Z       assets: [],
+2025-06-01T03:50:30.8962952Z       tarball_url: 'https://api.github.com/repos/mypyc/mypy_mypyc-wheels/tarball/v1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139',
+2025-06-01T03:50:30.8964008Z       zipball_url: 'https://api.github.com/repos/mypyc/mypy_mypyc-wheels/zipball/v1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139',
+2025-06-01T03:50:30.8964724Z       body: null
+2025-06-01T03:50:30.8965079Z     }
+2025-06-01T03:50:30.8965661Z   }
+2025-06-01T03:50:30.8965992Z }
+2025-06-01T03:50:30.8966394Z uploading mypy-1.17.0+dev-py3-none-any.whl
+2025-06-01T03:50:31.4774860Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp310-cp310-emscripten_3_1_14_wasm32.whl
+2025-06-01T03:50:32.1528225Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp310-cp310-macosx_10_9_x86_64.whl
+2025-06-01T03:50:32.8488801Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp310-cp310-macosx_11_0_arm64.whl
+2025-06-01T03:50:33.6457029Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_28_aarch64.whl
+2025-06-01T03:50:34.5647297Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl
+2025-06-01T03:50:35.3699777Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp310-cp310-musllinux_1_2_x86_64.whl
+2025-06-01T03:50:36.0543700Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp310-cp310-win_amd64.whl
+2025-06-01T03:50:36.8568011Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp311-cp311-macosx_10_9_x86_64.whl
+2025-06-01T03:50:37.5893361Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp311-cp311-macosx_11_0_arm64.whl
+2025-06-01T03:50:38.3540575Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_28_aarch64.whl
+2025-06-01T03:50:39.0311664Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl
+2025-06-01T03:50:39.8379007Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp311-cp311-musllinux_1_2_x86_64.whl
+2025-06-01T03:50:40.6381669Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp311-cp311-win_amd64.whl
+2025-06-01T03:50:41.4238769Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp312-cp312-macosx_10_13_x86_64.whl
+2025-06-01T03:50:42.2832852Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp312-cp312-macosx_11_0_arm64.whl
+2025-06-01T03:50:42.9983366Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_28_aarch64.whl
+2025-06-01T03:50:43.7212203Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl
+2025-06-01T03:50:44.6383047Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp312-cp312-musllinux_1_2_x86_64.whl
+2025-06-01T03:50:45.5063120Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp312-cp312-win_amd64.whl
+2025-06-01T03:50:46.1023246Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp313-cp313-macosx_10_13_x86_64.whl
+2025-06-01T03:50:46.8187916Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp313-cp313-macosx_11_0_arm64.whl
+2025-06-01T03:50:47.6316224Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_28_aarch64.whl
+2025-06-01T03:50:48.4714741Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl
+2025-06-01T03:50:49.2845143Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp313-cp313-musllinux_1_2_x86_64.whl
+2025-06-01T03:50:50.0967237Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp313-cp313-win_amd64.whl
+2025-06-01T03:50:50.7913350Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp39-cp39-macosx_10_9_x86_64.whl
+2025-06-01T03:50:51.4813217Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp39-cp39-macosx_11_0_arm64.whl
+2025-06-01T03:50:52.2945765Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_28_aarch64.whl
+2025-06-01T03:50:52.9568527Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl
+2025-06-01T03:50:53.7783443Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp39-cp39-musllinux_1_2_x86_64.whl
+2025-06-01T03:50:54.6450147Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139-cp39-cp39-win_amd64.whl
+2025-06-01T03:50:55.5069284Z uploading mypy-1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139.tar.gz
+2025-06-01T03:50:56.0071089Z Cleaning up orphan processes

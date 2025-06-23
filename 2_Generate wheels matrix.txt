@@ -1,0 +1,205 @@
+﻿2025-06-01T01:37:03.5602949Z Current runner version: '2.324.0'
+2025-06-01T01:37:03.5628357Z ##[group]Runner Image Provisioner
+2025-06-01T01:37:03.5629172Z Hosted Compute Agent
+2025-06-01T01:37:03.5629800Z Version: 20250508.323
+2025-06-01T01:37:03.5630333Z Commit: 81b259f29879f73b4213d199e42d8c3465dae986
+2025-06-01T01:37:03.5630990Z Build Date: 2025-05-08T19:40:08Z
+2025-06-01T01:37:03.5631615Z ##[endgroup]
+2025-06-01T01:37:03.5632125Z ##[group]Operating System
+2025-06-01T01:37:03.5632670Z Ubuntu
+2025-06-01T01:37:03.5633138Z 24.04.2
+2025-06-01T01:37:03.5633610Z LTS
+2025-06-01T01:37:03.5634017Z ##[endgroup]
+2025-06-01T01:37:03.5634516Z ##[group]Runner Image
+2025-06-01T01:37:03.5635053Z Image: ubuntu-24.04
+2025-06-01T01:37:03.5635550Z Version: 20250511.1.0
+2025-06-01T01:37:03.5636554Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250511.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-06-01T01:37:03.5638307Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250511.1
+2025-06-01T01:37:03.5639286Z ##[endgroup]
+2025-06-01T01:37:03.5641667Z ##[group]GITHUB_TOKEN Permissions
+2025-06-01T01:37:03.5643889Z Actions: write
+2025-06-01T01:37:03.5644533Z Attestations: write
+2025-06-01T01:37:03.5644998Z Checks: write
+2025-06-01T01:37:03.5645458Z Contents: write
+2025-06-01T01:37:03.5645987Z Deployments: write
+2025-06-01T01:37:03.5646494Z Discussions: write
+2025-06-01T01:37:03.5646993Z Issues: write
+2025-06-01T01:37:03.5647758Z Metadata: read
+2025-06-01T01:37:03.5648246Z Models: read
+2025-06-01T01:37:03.5648694Z Packages: write
+2025-06-01T01:37:03.5649234Z Pages: write
+2025-06-01T01:37:03.5649680Z PullRequests: write
+2025-06-01T01:37:03.5650231Z RepositoryProjects: write
+2025-06-01T01:37:03.5650768Z SecurityEvents: write
+2025-06-01T01:37:03.5651417Z Statuses: write
+2025-06-01T01:37:03.5651904Z ##[endgroup]
+2025-06-01T01:37:03.5654140Z Secret source: Actions
+2025-06-01T01:37:03.5654854Z Prepare workflow directory
+2025-06-01T01:37:03.6118884Z Prepare all required actions
+2025-06-01T01:37:03.6181483Z Getting action download info
+2025-06-01T01:37:03.8777833Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-06-01T01:37:03.8778895Z Version: 4.2.2
+2025-06-01T01:37:03.8779884Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-06-01T01:37:03.8781046Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-06-01T01:37:03.8781769Z ##[endgroup]
+2025-06-01T01:37:04.0110676Z Complete job name: Generate wheels matrix
+2025-06-01T01:37:04.0904473Z ##[group]Run actions/checkout@v4
+2025-06-01T01:37:04.0905303Z with:
+2025-06-01T01:37:04.0905717Z   repository: mypyc/mypy_mypyc-wheels
+2025-06-01T01:37:04.0906407Z   token: ***
+2025-06-01T01:37:04.0906796Z   ssh-strict: true
+2025-06-01T01:37:04.0907420Z   ssh-user: git
+2025-06-01T01:37:04.0907829Z   persist-credentials: true
+2025-06-01T01:37:04.0908275Z   clean: true
+2025-06-01T01:37:04.0908700Z   sparse-checkout-cone-mode: true
+2025-06-01T01:37:04.0909170Z   fetch-depth: 1
+2025-06-01T01:37:04.0909551Z   fetch-tags: false
+2025-06-01T01:37:04.0909971Z   show-progress: true
+2025-06-01T01:37:04.0910373Z   lfs: false
+2025-06-01T01:37:04.0910737Z   submodules: false
+2025-06-01T01:37:04.0911131Z   set-safe-directory: true
+2025-06-01T01:37:04.0911821Z ##[endgroup]
+2025-06-01T01:37:04.2079796Z Syncing repository: mypyc/mypy_mypyc-wheels
+2025-06-01T01:37:04.2081646Z ##[group]Getting Git version info
+2025-06-01T01:37:04.2082578Z Working directory is '/home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels'
+2025-06-01T01:37:04.2083598Z [command]/usr/bin/git version
+2025-06-01T01:37:04.2152621Z git version 2.49.0
+2025-06-01T01:37:04.2179871Z ##[endgroup]
+2025-06-01T01:37:04.2194298Z Temporarily overriding HOME='/home/runner/work/_temp/7b286690-fa78-4f79-8ba0-4d9287bfe519' before making global git config changes
+2025-06-01T01:37:04.2199969Z Adding repository directory to the temporary git global config as a safe directory
+2025-06-01T01:37:04.2201778Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels
+2025-06-01T01:37:04.2245599Z Deleting the contents of '/home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels'
+2025-06-01T01:37:04.2249633Z ##[group]Initializing the repository
+2025-06-01T01:37:04.2253734Z [command]/usr/bin/git init /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels
+2025-06-01T01:37:04.2343790Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-06-01T01:37:04.2345187Z hint: is subject to change. To configure the initial branch name to use in all
+2025-06-01T01:37:04.2346162Z hint: of your new repositories, which will suppress this warning, call:
+2025-06-01T01:37:04.2347085Z hint:
+2025-06-01T01:37:04.2348021Z hint: 	git config --global init.defaultBranch <name>
+2025-06-01T01:37:04.2348849Z hint:
+2025-06-01T01:37:04.2349766Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-06-01T01:37:04.2350901Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-06-01T01:37:04.2351637Z hint:
+2025-06-01T01:37:04.2352069Z hint: 	git branch -m <name>
+2025-06-01T01:37:04.2352952Z Initialized empty Git repository in /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels/.git/
+2025-06-01T01:37:04.2365826Z [command]/usr/bin/git remote add origin https://github.com/mypyc/mypy_mypyc-wheels
+2025-06-01T01:37:04.2415297Z ##[endgroup]
+2025-06-01T01:37:04.2416035Z ##[group]Disabling automatic garbage collection
+2025-06-01T01:37:04.2421063Z [command]/usr/bin/git config --local gc.auto 0
+2025-06-01T01:37:04.2458195Z ##[endgroup]
+2025-06-01T01:37:04.2459450Z ##[group]Setting up auth
+2025-06-01T01:37:04.2466612Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-06-01T01:37:04.2501891Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-06-01T01:37:04.2826383Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-06-01T01:37:04.2856552Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-06-01T01:37:04.3075773Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-06-01T01:37:04.3110827Z ##[endgroup]
+2025-06-01T01:37:04.3111843Z ##[group]Fetching the repository
+2025-06-01T01:37:04.3128920Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c580a684254e81fe7c286daac7c96be68f52a94c:refs/tags/v1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139
+2025-06-01T01:37:04.7074864Z From https://github.com/mypyc/mypy_mypyc-wheels
+2025-06-01T01:37:04.7076202Z  * [new ref]         c580a684254e81fe7c286daac7c96be68f52a94c -> v1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139
+2025-06-01T01:37:04.7114292Z ##[endgroup]
+2025-06-01T01:37:04.7115159Z ##[group]Determining the checkout info
+2025-06-01T01:37:04.7117396Z ##[endgroup]
+2025-06-01T01:37:04.7123127Z [command]/usr/bin/git sparse-checkout disable
+2025-06-01T01:37:04.7172787Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-06-01T01:37:04.7206546Z ##[group]Checking out the ref
+2025-06-01T01:37:04.7212237Z [command]/usr/bin/git checkout --progress --force refs/tags/v1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139
+2025-06-01T01:37:04.7262798Z Note: switching to 'refs/tags/v1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139'.
+2025-06-01T01:37:04.7266151Z 
+2025-06-01T01:37:04.7266768Z You are in 'detached HEAD' state. You can look around, make experimental
+2025-06-01T01:37:04.7268070Z changes and commit them, and you can discard any commits you make in this
+2025-06-01T01:37:04.7269008Z state without impacting any branches by switching back to a branch.
+2025-06-01T01:37:04.7269546Z 
+2025-06-01T01:37:04.7269907Z If you want to create a new branch to retain commits you create, you may
+2025-06-01T01:37:04.7271084Z do so (now or later) by using -c with the switch command. Example:
+2025-06-01T01:37:04.7272031Z 
+2025-06-01T01:37:04.7272423Z   git switch -c <new-branch-name>
+2025-06-01T01:37:04.7273019Z 
+2025-06-01T01:37:04.7273317Z Or undo this operation with:
+2025-06-01T01:37:04.7273649Z 
+2025-06-01T01:37:04.7273838Z   git switch -
+2025-06-01T01:37:04.7274119Z 
+2025-06-01T01:37:04.7274551Z Turn off this advice by setting config variable advice.detachedHead to false
+2025-06-01T01:37:04.7275103Z 
+2025-06-01T01:37:04.7275572Z HEAD is now at c580a68 Build wheels for mypy 1.17.0+dev.5fbfff97f2197b38321363f4d294f47009a28139
+2025-06-01T01:37:04.7277635Z ##[endgroup]
+2025-06-01T01:37:04.7328329Z [command]/usr/bin/git log -1 --format=%H
+2025-06-01T01:37:04.7360159Z c580a684254e81fe7c286daac7c96be68f52a94c
+2025-06-01T01:37:04.7595693Z ##[group]Run git clone https://github.com/python/mypy.git --recurse-submodules
+2025-06-01T01:37:04.7596885Z [36;1mgit clone https://github.com/python/mypy.git --recurse-submodules[0m
+2025-06-01T01:37:04.7597961Z [36;1mgit -C mypy checkout $(cat mypy_commit)[0m
+2025-06-01T01:37:04.7807821Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2025-06-01T01:37:04.7808578Z ##[endgroup]
+2025-06-01T01:37:04.7934040Z Cloning into 'mypy'...
+2025-06-01T01:37:10.7714559Z Note: switching to '5fbfff97f2197b38321363f4d294f47009a28139'.
+2025-06-01T01:37:10.7715196Z 
+2025-06-01T01:37:10.7715584Z You are in 'detached HEAD' state. You can look around, make experimental
+2025-06-01T01:37:10.7716405Z changes and commit them, and you can discard any commits you make in this
+2025-06-01T01:37:10.7717428Z state without impacting any branches by switching back to a branch.
+2025-06-01T01:37:10.7717962Z 
+2025-06-01T01:37:10.7718409Z If you want to create a new branch to retain commits you create, you may
+2025-06-01T01:37:10.7719165Z do so (now or later) by using -c with the switch command. Example:
+2025-06-01T01:37:10.7719604Z 
+2025-06-01T01:37:10.7719811Z   git switch -c <new-branch-name>
+2025-06-01T01:37:10.7720116Z 
+2025-06-01T01:37:10.7720310Z Or undo this operation with:
+2025-06-01T01:37:10.7720592Z 
+2025-06-01T01:37:10.7720771Z   git switch -
+2025-06-01T01:37:10.7721000Z 
+2025-06-01T01:37:10.7721364Z Turn off this advice by setting config variable advice.detachedHead to false
+2025-06-01T01:37:10.7721837Z 
+2025-06-01T01:37:10.7723738Z HEAD is now at 5fbfff97f Tighten metaclass __call__ handling in protocols (#19191)
+2025-06-01T01:37:10.7764727Z ##[group]Run pipx install cibuildwheel==2.23.2
+2025-06-01T01:37:10.7765141Z [36;1mpipx install cibuildwheel==2.23.2[0m
+2025-06-01T01:37:10.7765458Z [36;1mpipx install pypyp==1.3.0[0m
+2025-06-01T01:37:10.7819689Z shell: /usr/bin/bash -e {0}
+2025-06-01T01:37:10.7819975Z ##[endgroup]
+2025-06-01T01:37:11.4732604Z creating virtual environment...
+2025-06-01T01:37:11.6931045Z installing cibuildwheel from spec 'cibuildwheel==2.23.2'...
+2025-06-01T01:37:14.2524644Z done! ✨ 🌟 ✨
+2025-06-01T01:37:14.2525594Z   installed package cibuildwheel 2.23.2, installed using Python 3.12.3
+2025-06-01T01:37:14.2526464Z   These apps are now globally available
+2025-06-01T01:37:14.2527034Z     - cibuildwheel
+2025-06-01T01:37:14.3820640Z creating virtual environment...
+2025-06-01T01:37:14.4702701Z installing pypyp from spec 'pypyp==1.3.0'...
+2025-06-01T01:37:15.0037820Z done! ✨ 🌟 ✨
+2025-06-01T01:37:15.0038408Z   installed package pypyp 1.3.0, installed using Python 3.12.3
+2025-06-01T01:37:15.0039062Z   These apps are now globally available
+2025-06-01T01:37:15.0039608Z     - pyp
+2025-06-01T01:37:15.0039875Z     - pypyp
+2025-06-01T01:37:15.0265907Z ##[group]Run MATRIX=$(
+2025-06-01T01:37:15.0266171Z [36;1mMATRIX=$([0m
+2025-06-01T01:37:15.0266353Z [36;1m  {[0m
+2025-06-01T01:37:15.0266819Z [36;1m    cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform linux --archs x86_64 mypy \[0m
+2025-06-01T01:37:15.0267627Z [36;1m    | pyp 'json.dumps({"only": x, "os": "ubuntu-latest"})' \[0m
+2025-06-01T01:37:15.0268191Z [36;1m    && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform linux --archs aarch64 mypy \[0m
+2025-06-01T01:37:15.0269007Z [36;1m    | pyp 'json.dumps({"only": x, "os": "ubuntu-24.04-arm"})' \[0m
+2025-06-01T01:37:15.0269500Z [36;1m    && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform macos mypy \[0m
+2025-06-01T01:37:15.0270000Z [36;1m    | pyp 'json.dumps({"only": x, "os": "macos-latest"})' \[0m
+2025-06-01T01:37:15.0270542Z [36;1m    && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform windows mypy \[0m
+2025-06-01T01:37:15.0271035Z [36;1m    | pyp 'json.dumps({"only": x, "os": "windows-latest"})'[0m
+2025-06-01T01:37:15.0271367Z [36;1m  } | pyp 'json.dumps(list(map(json.loads, lines)))'[0m
+2025-06-01T01:37:15.0271635Z [36;1m)[0m
+2025-06-01T01:37:15.0271846Z [36;1mecho "include=$MATRIX" | tee -a $GITHUB_OUTPUT[0m
+2025-06-01T01:37:15.0322790Z shell: /usr/bin/bash -e {0}
+2025-06-01T01:37:15.0323010Z env:
+2025-06-01T01:37:15.0323193Z   CIBW_ARCHS_MACOS: x86_64 arm64
+2025-06-01T01:37:15.0323426Z   CIBW_ARCHS_WINDOWS: AMD64
+2025-06-01T01:37:15.0323628Z ##[endgroup]
+2025-06-01T01:37:16.1744875Z include=[{"only": "cp39-manylinux_x86_64", "os": "ubuntu-latest"}, {"only": "cp310-manylinux_x86_64", "os": "ubuntu-latest"}, {"only": "cp311-manylinux_x86_64", "os": "ubuntu-latest"}, {"only": "cp312-manylinux_x86_64", "os": "ubuntu-latest"}, {"only": "cp313-manylinux_x86_64", "os": "ubuntu-latest"}, {"only": "cp39-musllinux_x86_64", "os": "ubuntu-latest"}, {"only": "cp310-musllinux_x86_64", "os": "ubuntu-latest"}, {"only": "cp311-musllinux_x86_64", "os": "ubuntu-latest"}, {"only": "cp312-musllinux_x86_64", "os": "ubuntu-latest"}, {"only": "cp313-musllinux_x86_64", "os": "ubuntu-latest"}, {"only": "cp39-manylinux_aarch64", "os": "ubuntu-24.04-arm"}, {"only": "cp310-manylinux_aarch64", "os": "ubuntu-24.04-arm"}, {"only": "cp311-manylinux_aarch64", "os": "ubuntu-24.04-arm"}, {"only": "cp312-manylinux_aarch64", "os": "ubuntu-24.04-arm"}, {"only": "cp313-manylinux_aarch64", "os": "ubuntu-24.04-arm"}, {"only": "cp39-macosx_x86_64", "os": "macos-latest"}, {"only": "cp39-macosx_arm64", "os": "macos-latest"}, {"only": "cp310-macosx_x86_64", "os": "macos-latest"}, {"only": "cp310-macosx_arm64", "os": "macos-latest"}, {"only": "cp311-macosx_x86_64", "os": "macos-latest"}, {"only": "cp311-macosx_arm64", "os": "macos-latest"}, {"only": "cp312-macosx_x86_64", "os": "macos-latest"}, {"only": "cp312-macosx_arm64", "os": "macos-latest"}, {"only": "cp313-macosx_x86_64", "os": "macos-latest"}, {"only": "cp313-macosx_arm64", "os": "macos-latest"}, {"only": "cp39-win_amd64", "os": "windows-latest"}, {"only": "cp310-win_amd64", "os": "windows-latest"}, {"only": "cp311-win_amd64", "os": "windows-latest"}, {"only": "cp312-win_amd64", "os": "windows-latest"}, {"only": "cp313-win_amd64", "os": "windows-latest"}]
+2025-06-01T01:37:16.1837703Z Post job cleanup.
+2025-06-01T01:37:16.2782009Z [command]/usr/bin/git version
+2025-06-01T01:37:16.2821078Z git version 2.49.0
+2025-06-01T01:37:16.2864996Z Temporarily overriding HOME='/home/runner/work/_temp/f068f3c8-9fd4-4f9d-a893-4a301d7868ff' before making global git config changes
+2025-06-01T01:37:16.2866166Z Adding repository directory to the temporary git global config as a safe directory
+2025-06-01T01:37:16.2871092Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mypy_mypyc-wheels/mypy_mypyc-wheels
+2025-06-01T01:37:16.2905130Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-06-01T01:37:16.2937815Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-06-01T01:37:16.3154700Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-06-01T01:37:16.3174770Z http.https://github.com/.extraheader
+2025-06-01T01:37:16.3186808Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-06-01T01:37:16.3216367Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-06-01T01:37:16.3538343Z Evaluate and set job outputs
+2025-06-01T01:37:16.3548383Z Set output 'include'
+2025-06-01T01:37:16.3550351Z Cleaning up orphan processes

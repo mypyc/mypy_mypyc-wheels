@@ -9,7 +9,9 @@ linux.musllinux-aarch64-image = "musllinux_1_2"
 enable = []
 
 # Don't build musllinux arm64, PyPy and 32-bit Linux are skipped by default
+# Skip free threading builds for now
 skip = [
+  "cp31?t-*",
   "*-win32",
   "*-musllinux_aarch64",
 ]

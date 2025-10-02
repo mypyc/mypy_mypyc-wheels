@@ -112,7 +112,7 @@ jobs:
 
   build_wasm_wheel:
     # temporarily disable until we figure out how to build with librt.
-    if: fasle
+    if: false
     name: WASM wheel for 3.10
     runs-on: ubuntu-latest
     steps:

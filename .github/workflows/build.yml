@@ -110,64 +110,66 @@ jobs:
             mypy/dist/*.tar.gz
           overwrite: true
 
-  build_wasm_wheel:
-    name: WASM wheel for 3.10
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        name: Install Python
-        with:
-          python-version: "3.10"
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18.5.0 # pyodide tests with this version
-      - name: Install emscripten
-        id: install_emsdk
-        run: |
-          git clone https://github.com/emscripten-core/emsdk.git
-          cd emsdk
-          # Version of Emscripten pyodide 0.21.0 uses.
-          ./emsdk install 3.1.14
-          ./emsdk activate 3.1.14
-          # We need the location of emscripten when we use pyodide-build
-          echo "EMSCRIPTEN_DIR=$(pwd)" >> $GITHUB_OUTPUT
-      - name: Checkout mypy
-        shell: bash
-        run: |
-          COMMIT=$(cat mypy_commit)
-          git clone https://github.com/python/mypy.git
-          cd mypy
-          git checkout $COMMIT
-          git submodule update --init --recursive
-      - name: Install pyodide-build
-        run: |
-          python -m pip install "pyodide-build==0.21.0"
-      - name: Build wasm wheels
-        env:
-          MYPY_USE_MYPYC: "1"
-          MYPYC_OPT_LEVEL: "3"
-          EMSCRIPTEN_DIR: ${{ steps.install_emsdk.outputs.EMSCRIPTEN_DIR }}
-        run: |
-          cd mypy
-          source $EMSCRIPTEN_DIR/emsdk_env.sh
-          pyodide build --exports pyinit
-      - name: Install pyodide for WASM test
-        run: |
-          npm install pyodide@0.21.3
-      - name: Run WASM smoke test
-        run: |
-          node wasm_test.js
-      - uses: actions/upload-artifact@v4
-        with:
-          name: dist-wasm_wheel
-          path: |
-            mypy/dist/*.whl
-          overwrite: true
+# Temporarily disable WASM build until we figure out how to build with librt.
+#
+#  build_wasm_wheel:
+#    name: WASM wheel for 3.10
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-python@v5
+#        name: Install Python
+#        with:
+#          python-version: "3.10"
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 18.5.0 # pyodide tests with this version
+#      - name: Install emscripten
+#        id: install_emsdk
+#        run: |
+#          git clone https://github.com/emscripten-core/emsdk.git
+#          cd emsdk
+#          # Version of Emscripten pyodide 0.21.0 uses.
+#          ./emsdk install 3.1.14
+#          ./emsdk activate 3.1.14
+#          # We need the location of emscripten when we use pyodide-build
+#          echo "EMSCRIPTEN_DIR=$(pwd)" >> $GITHUB_OUTPUT
+#      - name: Checkout mypy
+#        shell: bash
+#        run: |
+#          COMMIT=$(cat mypy_commit)
+#          git clone https://github.com/python/mypy.git
+#          cd mypy
+#          git checkout $COMMIT
+#          git submodule update --init --recursive
+#      - name: Install pyodide-build
+#        run: |
+#          python -m pip install "pyodide-build==0.21.0"
+#      - name: Build wasm wheels
+#        env:
+#          MYPY_USE_MYPYC: "1"
+#          MYPYC_OPT_LEVEL: "3"
+#          EMSCRIPTEN_DIR: ${{ steps.install_emsdk.outputs.EMSCRIPTEN_DIR }}
+#        run: |
+#          cd mypy
+#          source $EMSCRIPTEN_DIR/emsdk_env.sh
+#          pyodide build --exports pyinit
+#      - name: Install pyodide for WASM test
+#        run: |
+#          npm install pyodide@0.21.3
+#      - name: Run WASM smoke test
+#        run: |
+#          node wasm_test.js
+#      - uses: actions/upload-artifact@v4
+#        with:
+#          name: dist-wasm_wheel
+#          path: |
+#            mypy/dist/*.whl
+#          overwrite: true
 
   release:
     name: create release
-    needs: [build_wheels, build_sdist_python_wheel, build_wasm_wheel]
+    needs: [build_wheels, build_sdist_python_wheel]
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact

@@ -111,6 +111,8 @@ jobs:
           overwrite: true
 
   build_wasm_wheel:
+    # temporarily disable until we figure out how to build with librt.
+    if: false
     name: WASM wheel for 3.10
     runs-on: ubuntu-latest
     steps:
@@ -167,7 +169,7 @@ jobs:
 
   release:
     name: create release
-    needs: [build_wheels, build_sdist_python_wheel, build_wasm_wheel]
+    needs: [build_wheels, build_sdist_python_wheel]
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact

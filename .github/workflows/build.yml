@@ -36,13 +36,14 @@ jobs:
               && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform macos mypy \
               | pyp 'json.dumps({"only": x, "os": "macos-latest"})' \
               && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform windows mypy \
-              | pyp 'json.dumps({"only": x, "os": "windows-latest"})'
+              | pyp 'json.dumps({"only": x, "os": "windows-latest"})' \
+              && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform windows --archs ARM64 mypy \
+              | pyp 'json.dumps({"only": x, "os": "windows-11-arm"})'
             } | pyp 'json.dumps(list(map(json.loads, lines)))'
           )
           echo "include=$MATRIX" | tee -a $GITHUB_OUTPUT
         env:
           CIBW_ARCHS_MACOS: x86_64 arm64
-          CIBW_ARCHS_WINDOWS: AMD64
 
   build_wheels:
     name: Build ${{ matrix.only }}

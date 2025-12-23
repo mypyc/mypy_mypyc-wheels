@@ -64,7 +64,8 @@ jobs:
           git clone https://github.com/python/mypy.git --recurse-submodules
           git -C mypy checkout $(cat mypy_commit)
 
-      - uses: pypa/cibuildwheel@v3.3.0
+      - uses: pypa/cibuildwheel@d0e070e278d440baec8fe291cb0bf1ea85b9c9d4 # v3.3.0+ 2025-12-23
+        # Use main commit temporarily to be able to use Python 3.14.2 with fixes for free threading
         with:
           config-file: cibuildwheel.toml
           package-dir: mypy

@@ -101,7 +101,7 @@ jobs:
       - name: Build sdist and wheel
         run: |
           cd mypy
-          pip install --upgrade setuptools build
+          pip install --upgrade build
           python -m build
       - uses: actions/upload-artifact@v6
         with:

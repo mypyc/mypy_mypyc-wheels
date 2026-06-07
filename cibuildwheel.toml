@@ -10,9 +10,7 @@ enable = []
 
 # Don't build musllinux arm64 and 32-bit Windows.
 # PyPy and 32-bit Linux are skipped by default
-# Start building free threading wheels for Python 3.14, i.e. skip 3.13
 skip = [
-  "cp313t-*",
   "*-win32",
   "*-musllinux_aarch64",
 ]

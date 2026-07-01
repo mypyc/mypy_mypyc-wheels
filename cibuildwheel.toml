@@ -64,7 +64,7 @@ pyodide.test-command = """ \
     && cp '{project}/mypy/pyproject.toml' '{project}/mypy/conftest.py' $DIR \
 \
     && MYPY_TEST_DIR=$(python -c 'import mypy.test; print(mypy.test.__path__[0])') \
-    && MYPY_TEST_PREFIX='{project}/mypy' python -m pytest $MYPY_TEST_DIR/testcheck.py
+    && MYPY_TEST_PREFIX='{project}/mypy' python -m pytest -n0 $MYPY_TEST_DIR/testcheck.py
 """
 
 [tool.cibuildwheel.config-settings]

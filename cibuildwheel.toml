@@ -59,7 +59,7 @@ windows.test-command = """ \
   )"
 """
 
-pyodide.test-command = "python -c 'import mypy; print(mypy.__path__)'"
+pyodide.test-command = "python -c 'import mypy.test; print(mypy.test.__path__)'"
 
 [tool.cibuildwheel.config-settings]
 --build-option = "--use-mypyc"

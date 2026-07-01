@@ -13,7 +13,7 @@ enable = []
 skip = [
   "*-win32",
   "*-musllinux_aarch64",
-  "*-pyemscripten_2025_0_wasm32",
+  "cp313-pyodide_wasm32",
 ]
 
 build-verbosity = 1

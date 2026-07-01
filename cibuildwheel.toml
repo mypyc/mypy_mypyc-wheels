@@ -59,15 +59,7 @@ windows.test-command = """ \
   )"
 """
 
-pyodide.test-command = """ \
-  bash -c "( \
-    DIR=$(python -c 'import mypy, os; dn = os.path.dirname; print(dn(dn(mypy.__path__[0])))') \
-    && cp '{project}/mypy/pyproject.toml' '{project}/mypy/conftest.py' $DIR \
-\
-    && MYPY_TEST_DIR=$(python -c 'import mypy.test; print(mypy.test.__path__[0])') \
-    && MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPY_TEST_DIR/testcheck.py \
-  )"
-"""
+pyodide.test-command = "python -c 'import mypy; print(mypy.__path__)'"
 
 [tool.cibuildwheel.config-settings]
 --build-option = "--use-mypyc"

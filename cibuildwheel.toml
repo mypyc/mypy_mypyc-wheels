@@ -13,6 +13,7 @@ enable = []
 skip = [
   "*-win32",
   "*-musllinux_aarch64",
+  "*-pyemscripten_2025_0_wasm32",
 ]
 
 build-verbosity = 1
@@ -23,6 +24,10 @@ linux.before-all = [
 
 before-test = [
   "pip install -r {project}/mypy/test-requirements.txt",
+]
+
+pyodide.before-test = [
+  "pip install pytest>=8.1.0 pytest-xdist>=1.34.0 -r {project}/mypy/mypy-requirements.txt",
 ]
 
 # pytest looks for configuration files in the parent directories of where the tests live.
@@ -45,6 +50,16 @@ test-command = """ \
 # I ran into some flaky tests on windows, so only run testcheck. it looks like we
 # previously didn't run any tests on windows wheels, so this is a net win.
 windows.test-command = """ \
+  bash -c "( \
+    DIR=$(python -c 'import mypy, os; dn = os.path.dirname; print(dn(dn(mypy.__path__[0])))') \
+    && cp '{project}/mypy/pyproject.toml' '{project}/mypy/conftest.py' $DIR \
+\
+    && MYPY_TEST_DIR=$(python -c 'import mypy.test; print(mypy.test.__path__[0])') \
+    && MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPY_TEST_DIR/testcheck.py \
+  )"
+"""
+
+pyodide.test-command = """ \
   bash -c "( \
     DIR=$(python -c 'import mypy, os; dn = os.path.dirname; print(dn(dn(mypy.__path__[0])))') \
     && cp '{project}/mypy/pyproject.toml' '{project}/mypy/conftest.py' $DIR \

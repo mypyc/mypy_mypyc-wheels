@@ -102,3 +102,20 @@ before-test = [
   "pip install -r {project}/mypy/test-requirements.txt",
 ]
 environment = { MYPYC_OPT_LEVEL="3", MYPYC_DEBUG_LEVEL="0", CC="clang" }
+
+# GitHub retired the Intel macOS runners, so x86_64 wheels are now tested under
+# Rosetta on an arm64 host. The Apple clang linker segfaults intermittently under
+# that emulation, which breaks the mypyc run tests (they compile extensions at test
+# time). Since the arm64 job already exercises the full run/compile test suite
+# natively, only run testcheck (no compilation) for x86_64 macOS.
+[[tool.cibuildwheel.overrides]]
+select = "*-macosx_x86_64"
+test-command = """ \
+  ( \
+     DIR=$(python -c 'import mypy, os; dn = os.path.dirname; print(dn(dn(mypy.__path__[0])))') \
+     && cp '{project}/mypy/pyproject.toml' '{project}/mypy/conftest.py' $DIR \
+\
+     && MYPY_TEST_DIR=$(python -c 'import mypy.test; print(mypy.test.__path__[0])') \
+     && MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPY_TEST_DIR/testcheck.py \
+   )
+"""

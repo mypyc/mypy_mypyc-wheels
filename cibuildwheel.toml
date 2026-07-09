@@ -8,7 +8,7 @@ linux.musllinux-aarch64-image = "musllinux_1_2"
 
 enable = []
 
-# Don't build musllinux arm64 and 32-bit Windows.
+# Don't build musllinux arm64, 32-bit Windows and macOS x86_64.
 # PyPy and 32-bit Linux are skipped by default.
 # We also skip Pyodide on Python 3.13, because there is no wheel for ast-serialize.
 # To be more precise, although we ship a stable ABI wheel, its platform tag may be different
@@ -17,6 +17,7 @@ enable = []
 # a Rust version that is incompatible with Ruff crates we depend on.
 skip = [
   "*-win32",
+  "*-macosx_x86_64",
   "*-musllinux_aarch64",
   "cp313-pyodide_wasm32",
 ]
@@ -102,20 +103,3 @@ before-test = [
   "pip install -r {project}/mypy/test-requirements.txt",
 ]
 environment = { MYPYC_OPT_LEVEL="3", MYPYC_DEBUG_LEVEL="0", CC="clang" }
-
-# GitHub retired the Intel macOS runners, so x86_64 wheels are now tested under
-# Rosetta on an arm64 host. The Apple clang linker segfaults intermittently under
-# that emulation, which breaks the mypyc run tests (they compile extensions at test
-# time). Since the arm64 job already exercises the full run/compile test suite
-# natively, only run testcheck (no compilation) for x86_64 macOS.
-[[tool.cibuildwheel.overrides]]
-select = "*-macosx_x86_64"
-test-command = """ \
-  ( \
-     DIR=$(python -c 'import mypy, os; dn = os.path.dirname; print(dn(dn(mypy.__path__[0])))') \
-     && cp '{project}/mypy/pyproject.toml' '{project}/mypy/conftest.py' $DIR \
-\
-     && MYPY_TEST_DIR=$(python -c 'import mypy.test; print(mypy.test.__path__[0])') \
-     && MYPY_TEST_PREFIX='{project}/mypy' pytest $MYPY_TEST_DIR/testcheck.py \
-   )
-"""

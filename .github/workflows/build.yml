@@ -13,7 +13,7 @@ jobs:
     outputs:
       include: ${{ steps.set-matrix.outputs.include }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Checkout mypy
         shell: bash
         # use a commit hash checked into a file to get the mypy revision to build.
@@ -23,7 +23,7 @@ jobs:
           git -C mypy checkout $(cat mypy_commit)
       - name: Install cibuildwheel and pypyp
         run: |
-          pipx install cibuildwheel==3.2.0
+          pipx install cibuildwheel==4.1.0
           pipx install pypyp==1.3.0
       - id: set-matrix
         run: |
@@ -33,16 +33,21 @@ jobs:
               | pyp 'json.dumps({"only": x, "os": "ubuntu-latest"})' \
               && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform linux --archs aarch64 mypy \
               | pyp 'json.dumps({"only": x, "os": "ubuntu-24.04-arm"})' \
-              && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform macos mypy \
+              && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform macos --archs arm64 mypy \
               | pyp 'json.dumps({"only": x, "os": "macos-latest"})' \
+              && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform macos --archs x86_64 mypy \
+              | pyp 'json.dumps({"only": x, "os": "macos-26-intel"})' \
               && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform windows mypy \
-              | pyp 'json.dumps({"only": x, "os": "windows-latest"})'
+              | pyp 'json.dumps({"only": x, "os": "windows-latest"})' \
+              && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform windows --archs ARM64 mypy \
+              | pyp 'json.dumps({"only": x, "os": "windows-11-arm"})' \
+              && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform pyodide --archs wasm32 mypy \
+              | pyp 'json.dumps({"only": x, "os": "ubuntu-latest"})'
             } | pyp 'json.dumps(list(map(json.loads, lines)))'
           )
           echo "include=$MATRIX" | tee -a $GITHUB_OUTPUT
         env:
           CIBW_ARCHS_MACOS: x86_64 arm64
-          CIBW_ARCHS_WINDOWS: AMD64
 
   build_wheels:
     name: Build ${{ matrix.only }}
@@ -54,7 +59,7 @@ jobs:
         include: ${{ fromJson(needs.generate_wheels_matrix.outputs.include) }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Checkout mypy
         shell: bash
         # use a commit hash checked into a file to get the mypy revision to build.
@@ -63,13 +68,13 @@ jobs:
           git clone https://github.com/python/mypy.git --recurse-submodules
           git -C mypy checkout $(cat mypy_commit)
 
-      - uses: pypa/cibuildwheel@v3.2.0
+      - uses: pypa/cibuildwheel@v4.1.0
         with:
           config-file: cibuildwheel.toml
           package-dir: mypy
           only: ${{ matrix.only }}
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: dist-${{ matrix.only }}
           path: ./wheelhouse/*.whl
@@ -79,11 +84,11 @@ jobs:
     name: sdist and python wheel
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         name: Install Python
         with:
-          python-version: "3.9"
+          python-version: "3.14"
       - name: Checkout mypy
         shell: bash
         run: |
@@ -100,9 +105,9 @@ jobs:
       - name: Build sdist and wheel
         run: |
           cd mypy
-          pip install --upgrade setuptools build
+          pip install --upgrade build
           python -m build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: dist-sdist_python_wheel
           path: |
@@ -110,68 +115,13 @@ jobs:
             mypy/dist/*.tar.gz
           overwrite: true
 
-  build_wasm_wheel:
-    name: WASM wheel for 3.10
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        name: Install Python
-        with:
-          python-version: "3.10"
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18.5.0 # pyodide tests with this version
-      - name: Install emscripten
-        id: install_emsdk
-        run: |
-          git clone https://github.com/emscripten-core/emsdk.git
-          cd emsdk
-          # Version of Emscripten pyodide 0.21.0 uses.
-          ./emsdk install 3.1.14
-          ./emsdk activate 3.1.14
-          # We need the location of emscripten when we use pyodide-build
-          echo "EMSCRIPTEN_DIR=$(pwd)" >> $GITHUB_OUTPUT
-      - name: Checkout mypy
-        shell: bash
-        run: |
-          COMMIT=$(cat mypy_commit)
-          git clone https://github.com/python/mypy.git
-          cd mypy
-          git checkout $COMMIT
-          git submodule update --init --recursive
-      - name: Install pyodide-build
-        run: |
-          python -m pip install "pyodide-build==0.21.0"
-      - name: Build wasm wheels
-        env:
-          MYPY_USE_MYPYC: "1"
-          MYPYC_OPT_LEVEL: "3"
-          EMSCRIPTEN_DIR: ${{ steps.install_emsdk.outputs.EMSCRIPTEN_DIR }}
-        run: |
-          cd mypy
-          source $EMSCRIPTEN_DIR/emsdk_env.sh
-          pyodide build --exports pyinit
-      - name: Install pyodide for WASM test
-        run: |
-          npm install pyodide@0.21.3
-      - name: Run WASM smoke test
-        run: |
-          node wasm_test.js
-      - uses: actions/upload-artifact@v4
-        with:
-          name: dist-wasm_wheel
-          path: |
-            mypy/dist/*.whl
-          overwrite: true
-
   release:
     name: create release
-    needs: [build_wheels, build_sdist_python_wheel, build_wasm_wheel]
+    needs: [build_wheels, build_sdist_python_wheel]
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: dist-*
           path: dist
@@ -179,7 +129,7 @@ jobs:
       - name: Release
         if: ${{ github.event_name != 'pull_request' }}
         # https://github.com/actions/upload-release-asset/issues/47
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |

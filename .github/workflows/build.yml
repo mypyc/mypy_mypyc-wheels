@@ -40,7 +40,9 @@ jobs:
               && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform windows --archs ARM64 mypy \
               | pyp 'json.dumps({"only": x, "os": "windows-11-arm"})' \
               && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform pyodide --archs wasm32 mypy \
-              | pyp 'json.dumps({"only": x, "os": "ubuntu-latest"})'
+              | pyp 'json.dumps({"only": x, "os": "ubuntu-latest"})' \
+              && cibuildwheel --config-file=cibuildwheel.toml --print-build-identifiers --platform linux --archs riscv64 mypy \
+              | pyp 'json.dumps({"only": x, "os": "ubuntu-24.04-arm"})'
             } | pyp 'json.dumps(list(map(json.loads, lines)))'
           )
           echo "include=$MATRIX" | tee -a $GITHUB_OUTPUT
@@ -65,6 +67,12 @@ jobs:
         run: |
           git clone https://github.com/python/mypy.git --recurse-submodules
           git -C mypy checkout $(cat mypy_commit)
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8 # v4.2.0
+        if: ${{ contains(matrix.only,'riscv64') }}
+        with:
+          platforms: riscv64
 
       - uses: pypa/cibuildwheel@v4.2.0
         with:
